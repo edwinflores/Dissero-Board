@@ -23,10 +23,18 @@ class ThreadController extends AppController
         $page       = Param::get('page_next');
 
         switch($page){
+
+            case 'write':
+                break;
+
             case 'write_end':
                 $comment->username  = Param::get('username');
                 $comment->body      = Param::get('body');
-                $thread->write($comment);
+                try{
+                    $thread->write($comment);
+                } catch (ValidationException $e) {
+                    $page = 'write';
+                }
                 break;
 
             default:

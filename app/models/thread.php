@@ -48,6 +48,10 @@ class Thread extends AppModel
 
 	public function write(Comment $comment)
 	{
+		if (!$comment->validate()){
+			throw new ValidationException('Invalid comment');
+		}
+
 		$db = DB::conn();
 		
 		$db->query(
