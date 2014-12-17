@@ -56,7 +56,7 @@ class UserController extends AppController
 				break;
 
 			default:
-				throw new UserNotFoundException("{$page} not found");
+				throw new UserNotFoundException("User not found");
 		}
 
 		$this->set(get_defined_vars());
@@ -67,6 +67,6 @@ class UserController extends AppController
 	public function logout()
 	{
 		session_destroy();
-		redirect(url('user/login'));
+		$this->render(url('user/login'));
 	}
 }

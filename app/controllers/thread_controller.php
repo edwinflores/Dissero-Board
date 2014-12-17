@@ -3,6 +3,10 @@ class ThreadController extends AppController
 {
     public function index()
     {
+        if(!is_logged_in()) {
+            $this->render('user/login');
+        }
+
         $threads = Thread::getAll();
 
         $this->set(get_defined_vars());
@@ -10,6 +14,10 @@ class ThreadController extends AppController
 
     public function view()
     {
+        if(!is_logged_in()) {
+            $this->render('user/login');
+        }
+
         $thread = Thread::get(Param::get('thread_id'));
         $comments = $thread->getComments();
 
@@ -18,6 +26,10 @@ class ThreadController extends AppController
 
     public function write()
     {
+        if(!is_logged_in()) {
+            $this->render('user/login');
+        }
+
         $thread     = Thread::get(Param::get('thread_id'));
         $comment    = new Comment;
         $page       = Param::get('page_next');
@@ -48,6 +60,10 @@ class ThreadController extends AppController
 
     public function create()
     {
+        if(!is_logged_in()) {
+            $this->render('user/login');
+        }
+        
         $thread     = new Thread;
         $comment    = new Comment;
         $page       = Param::get('page_next', 'create');

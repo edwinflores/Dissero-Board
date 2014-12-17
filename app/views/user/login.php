@@ -11,5 +11,5 @@
 
 <div>
 	<em>Register here:</em><br />
-	<a class="btn btn-danger" href="<?php eh(url('user/register')) ?>">Register</a>
+	<a class="btn btn-primary" href="<?php eh(url('user/register')) ?>">Register</a>
 </div>
