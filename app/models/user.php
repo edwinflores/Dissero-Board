@@ -2,6 +2,8 @@
 
 class User extends AppModel
 {
+	private $is_login_valid = true;
+
 	const MIN_NAME_CHARACTERS = 8;
 	const MAX_NAME_CHARACTERS = 20;
 
@@ -48,9 +50,16 @@ class User extends AppModel
 
 		if(!$row)
 		{
+			$this->is_login_valid = false;
 			throw new UserNotFoundException('Wrong username or password. Please try again');
 		}
 
 		return $row;
+	}
+
+	//Called to check if the login is valid or not
+	public function isLoginValid()
+	{
+		return $this->is_login_valid;
 	}
 }

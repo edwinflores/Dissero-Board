@@ -7,7 +7,7 @@
 	<?php if(!empty($thread->validation_errors['title']['length'])): ?>
 		<div><em>Title</em> must be between
 			<?php eh($thread->validation['title']['length'][1]) ?> and
-			<?php eh($thread->validation['title']['lentgh'][2]) ?> characters in length.
+			<?php eh($thread->validation['title']['length'][2]) ?> characters in length.
 		</div>
 	<?php endif ?>
 

@@ -1,4 +1,5 @@
 <h1><?php eh($thread->title) ?></h1>
+
 <?php foreach ($comments as $k => $v): ?>
 	<div class="comment">
 
@@ -26,3 +27,5 @@
 	<button type="submit" class="btn btn-primary">Submit</button>
 </form>
 
+<br />
+<a class="btn btn-danger" href="<?php eh(url('thread/index')) ?>">Back to Index</a>
