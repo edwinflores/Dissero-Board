@@ -22,7 +22,7 @@ class CommentController extends AppController
 
 		$page_links = createPageLinks(count($comments), $cur_page, $pagination->count, 'thread_id=' . $thread->id);
 
-		$comments 	= array_slice($comments, $pagination->start_index, $pagination->count);
+		$comments 	= array_slice($comments, $pagination->start_index -1, $pagination->count);
 
 		$this->set(get_defined_vars());
 	}

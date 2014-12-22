@@ -19,7 +19,7 @@ class ThreadController extends AppController
 
         $page_links     = createPageLinks(count($threads), $current_page, $pagination->count);
 
-        $threads        = array_slice($threads, $pagination->start_index, $pagination->count);
+        $threads        = array_slice($threads, $pagination->start_index - 1, $pagination->count);
 
         $this->set(get_defined_vars());
     }

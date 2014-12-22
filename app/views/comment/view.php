@@ -22,7 +22,7 @@
 	<?php echo $page_links ?>
 
 	<?php if(!$pagination->is_last_page): ?>
-		<a class='btn btn-small' href='?page=<?php eh(url($pagination->next))?>&thread_id=<?php eh(url($thread_id->id))?>'>Next</a>
+		<a class='btn btn-small' href='?page=<?php eh($pagination->next)?>&thread_id=<?php eh($thread->id)?>'>Next</a>
 	<?php endif ?>
 </div>
 

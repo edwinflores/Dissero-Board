@@ -4,7 +4,7 @@
 	You successfully created a thread.
 </p>
 
-<a href="<?php eh(url('thread/view', array('thread_id' => $thread->id)))?>">
-	&larr; Go to thread
+<a href="<?php eh(url('comment/view', array('thread_id' => $thread->id)))?>">
+	&larr; Go to thread.
 </a>
 
