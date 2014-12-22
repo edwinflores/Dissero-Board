@@ -11,6 +11,8 @@
  */
 class SimplePagination
 {
+    const MIN_PAGE_NUM = 1;
+
     public $current;        // 現在のページ番号
     public $prev;           // ひとつ前のページ番号
     public $next;           // ひとつ次のページ番号

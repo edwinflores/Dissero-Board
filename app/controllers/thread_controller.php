@@ -9,14 +9,17 @@ class ThreadController extends AppController
             $this->render('user/login');
         }
 
-        //$current_page   = max(Param::get('page'), SimplePagination::MIN_PAGE_NUM);
-        //$pagination     = new SimplePagination($current_page, self::MAX_ITEM_DISPLAY);
+        $current_page   = max(Param::get('page'), SimplePagination::MIN_PAGE_NUM);
+        $pagination     = new SimplePagination($current_page, self::MAX_ITEM_DISPLAY);
         
         $threads        = Thread::getAll();
-        //$other_threads  = array_slice($threads, $pagination->start_index + SimplePagination::MIN_PAGE_NUM);
-        //$pagination->checkLastPage($other_threads);
+        
+        $other_threads  = array_slice($threads, $pagination->start_index + SimplePagination::MIN_PAGE_NUM);
+        $pagination->checkLastPage($other_threads);
 
-        //$page_links     = createPaginationLinks(count($threads), $current_page, $pagination->count);
+        $page_links     = createPageLinks(count($threads), $current_page, $pagination->count);
+
+        $threads        = array_slice($threads, $pagination->start_index, $pagination->count);
 
         $this->set(get_defined_vars());
     }
