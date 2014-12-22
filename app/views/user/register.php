@@ -1,4 +1,4 @@
-<h2><font face="christmaseve" style="font-size: 75px">Registration Page</font></h2>
+<h2><font style="font-size: 40px">Registration Page</font></h2>
 
 <?php if ($user->hasError()): ?>
     <div class="alert alert-block">
@@ -23,17 +23,17 @@
 <?php endif ?>
 
 <form class="well" method="POST" action="<?php eh(url('user/register')) ?>">
-    <label><font face="moon flower bold" style="font-size: 30px">Set Username:</font></label>
+    <label><font style="font-size: 18px">Set Username:</font></label>
     <input type="text" class="span2" name="username" value="<?php eh(Param::get('username')) ?>" required><br />
 
-    <label><font face="moon flower bold" style="font-size: 30px">Set Password:</font></label>
+    <label><font style="font-size: 18px">Set Password:</font></label>
     <input type="password" class="span2" name="password" required><br />
 
     <input type="hidden" name="page_next" value="register_end">
-    <button type="submit" class="btn btn-primary"><font face="bebas">Register</font></button>
+    <button type="submit" class="btn btn-primary">Register</button>
 </form>
 
 <div>
-    <em><font face="moon flower" style="font-size: 25px">If you already have an account, log-in here:</font></em><br />
-    <a class="btn btn-danger" href="<?php eh(url('user/login')) ?>"><font face="bebas">Login</font></a>
+    <em><font style="font-size: 15px">If you already have an account, log-in here:</font></em><br />
+    <a class="btn btn-danger" href="<?php eh(url('user/login')) ?>">Login</a>
 </div>

@@ -1,9 +1,9 @@
-<h1><font face="christmaseve" style="font-size: 50px">All threads</font></h1>
+<h1><font style="font-size: 50px">All threads</font></h1>
 
 <ul>
     <?php foreach ($threads as $row): ?>
     <li>
-        <font face="moon flower bold" style="font-size: 30px">
+        <font style="font-size: 18px">
         <a href="<?php eh(url('comment/view', array('thread_id' => $row->id))) ?>">
         <?php eh($row->title) ?></a>
         </font>
@@ -12,7 +12,7 @@
     <?php endforeach ?>
 
     <div class="pagination">
-        <font face="bebas" style="font-size: 15px">
+        <font style="font-size: 15px">
         <?php if($pagination->current > 1): ?>
             &nbsp;<a class='btn btn-primary' href='?page=<?php eh($pagination->prev) ?>'>Previous</a>
         <?php endif ?>
@@ -26,9 +26,8 @@
     </div>
 </ul>
 
-<font face="bebas">
-    <a class="btn btn-large btn-primary" href="<?php eh(url('thread/create')) ?>">Create</a>
-    <br />
-    <br />
-    <a class="btn btn btn-danger" href="<?php eh(url('user/logout')) ?>">Logout</a>
-</font>
+
+<a class="btn btn-large btn-primary" href="<?php eh(url('thread/create')) ?>">Create</a>
+<br />
+<br />
+<a class="btn btn btn-danger" href="<?php eh(url('user/logout')) ?>">Logout</a>

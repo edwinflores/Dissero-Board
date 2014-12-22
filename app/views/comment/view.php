@@ -1,17 +1,17 @@
-<font face="djb coffee shoppe espresso"><h1><?php eh($thread->title) ?></h1></font>
+<h1><?php eh($thread->title) ?></h1>
 
 <?php foreach ($comments as $key => $value): ?>
     <div class="comment">
 
         <div class="meta">
-            <font face="mesmerize" style="font-size: 20px">
+            <font style="font-size: 20px">
             <?php eh($key + 1) ?>: <?php eh($value->username) ?><br /> 
-            <font style="font-size: 15px"> Posted : <?php eh($value->created) ?></font>
+            <font style="font-size: 15px"> Posted : <?php eh($value->created) ?>
             </font>
         </div>
 
         <div>
-            <font face="calibri" style="font-size: 15px">
+            <font style="font-size: 15px">
             <?php echo readable_text($value->body) ?>
             </font>
         </div>
@@ -35,17 +35,16 @@
 <hr>
 
 <form class="well" method="post" action="<?php eh(url('comment/write'))?>">
-    <font face="bebas">
     <label>Your name:</label>
     <input type="text" class="span2" name="username" value="<?php eh(Param::get('username')) ?>">
-    <label>Comment:</label></font>
+    <label>Comment:</label>
     <textarea name="body"><?php eh(Param::get('body')) ?></textarea>
     </br>
     <input type="hidden" name="thread_id" value="<?php eh($thread->id)?>">
     <input type="hidden" name="page_next" value="write_end">
-    <button type="submit" class="btn btn-primary"><font face="bebas">Submit</font></button>
+    <button type="submit" class="btn btn-primary">Submit</button>
     
 </form>
 
 <br />
-<a class="btn btn-danger" href="<?php eh(url('thread/index')) ?>"><font face="bebas">Back to Index</font></a>
+<a class="btn btn-danger" href="<?php eh(url('thread/index')) ?>">Back to Index</a>

@@ -1,4 +1,4 @@
-<h2><font face="djb coffee shoppe espresso" style="font-size: 30px">Hello <?php eh($_SESSION['username'])?>!</font></h2>
+<h2><font style="font-size: 30px">Hello <?php eh($_SESSION['username'])?>!</font></h2>
 <p class='alert alert-success'>
     You're now logged in to your account.
 </p>
