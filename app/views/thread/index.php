@@ -3,20 +3,20 @@
 <ul>
 	<?php foreach ($threads as $row): ?>
 	<li>
-		<a href="<?php eh(url('thread/view', array('thread_id' => $row->id))) ?>">
+		<a href="<?php eh(url('comment/view', array('thread_id' => $row->id))) ?>">
 		<?php eh($row->title) ?></a>
 	</li>
 	<?php endforeach ?>
 
 	<div class="pagination">
 		<?php if($pagination->current > 1): ?>
-			<a class='btn btn-primary' href='?page=<?php eh(url($pagination->prev)) ?>'>Previous</a>
+			<a class='btn btn-primary' href='?page=<?php eh($pagination->prev) ?>'>Previous</a>
 		<?php endif ?>
 
 		<?php echo $page_links ?>
 
 		<?php if(!$pagination->is_last_page): ?>
-			<a class='btn btn-primary' href='?page=<?php eh(url($pagination->next)) ?>'>Next</a>
+			<a class='btn btn-primary' href='?page=<?php eh($pagination->next) ?>'>Next</a>
 		<?php endif ?>
 	</div>
 </ul>

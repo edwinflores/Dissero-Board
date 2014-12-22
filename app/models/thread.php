@@ -38,35 +38,6 @@ class Thread extends AppModel
 		return $threads;
 	}
 
-	public function getComments()
-	{
-		$comments = array();
-
-		$db = DB::conn();
-
-		$rows = $db->rows(
-			'SELECT * FROM comment WHERE thread_id = ? ORDER BY created ASC', array($this->id));
-
-		foreach ($rows as $row){
-			$comments[] = new Comment($row);
-		}
-
-		return $comments;
-	}
-
-	public function write(Comment $comment)
-	{
-		if (!$comment->validate()){
-			throw new ValidationException('Invalid comment');
-		}
-
-		$db = DB::conn();
-		
-		$db->query(
-			'INSERT INTO comment SET thread_id=?, username=?, body=?, created=NOW()', array($this->id, $comment->username, $comment->body)
-		);
-	}
-
 	public function create(Comment $comment)
 	{
 		$this->validate();
@@ -83,9 +54,7 @@ class Thread extends AppModel
 		$db->query('INSERT INTO thread SET title = ?, created=NOW()', array($this->title));
 
 		$this->id = $db->lastInsertId();
-
-		//write first comment at the same time
-		$this->write($comment);
+		$comment->write($this->id);
 
 		$db->commit();
 	}
