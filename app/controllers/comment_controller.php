@@ -6,7 +6,7 @@ class CommentController extends AppController
     function __constructor()
     {
         if(!is_logged_in()) {
-            $this->render('user/login');
+            redirect(url('user/login'));
         }
     }
 

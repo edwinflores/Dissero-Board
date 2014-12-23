@@ -11,3 +11,8 @@ function is_logged_in()
 {
     return isset($_SESSION['username']);
 }
+
+function redirect($url)
+{
+	header("Location: $url");
+}

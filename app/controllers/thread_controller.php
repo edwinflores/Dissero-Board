@@ -6,7 +6,7 @@ class ThreadController extends AppController
     function __construct()
     {
        if(!is_logged_in()) {
-            $this->render('user/login');
+            redirect(url('user/login'));
         } 
     }
 
