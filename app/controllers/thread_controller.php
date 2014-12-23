@@ -3,12 +3,15 @@ class ThreadController extends AppController
 {
     const MAX_ITEM_DISPLAY = 5;
 
+    function __construct()
+    {
+       if(!is_logged_in()) {
+            $this->render('user/login');
+        } 
+    }
+
     public function index()
     {
-        if(!is_logged_in()) {
-            $this->render('user/login');
-        }
-
         $current_page   = max(Param::get('page'), SimplePagination::MIN_PAGE_NUM);
         $pagination     = new SimplePagination($current_page, self::MAX_ITEM_DISPLAY);
         
@@ -25,11 +28,7 @@ class ThreadController extends AppController
     }
 
     public function create()
-    {
-        if(!is_logged_in()) {
-            $this->render('user/login');
-        }
-        
+    {   
         $thread     = new Thread;
         $comment    = new Comment;
         $page       = Param::get('page_next', 'create');

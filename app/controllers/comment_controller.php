@@ -3,13 +3,16 @@ class CommentController extends AppController
 {
     const MAX_ITEM_DISPLAY = 5;
 
-    //Display thread and it's comments
-    public function view()
+    function __constructor()
     {
         if(!is_logged_in()) {
             $this->render('user/login');
         }
+    }
 
+    //Display thread and it's comments
+    public function view()
+    {
         $thread     = Thread::get(Param::get('thread_id'));
         $comments   = array();
         $cur_page   = max(Param::get('page'), SimplePagination::MIN_PAGE_NUM);
@@ -29,11 +32,7 @@ class CommentController extends AppController
 
     //Add new comment
     public function write()
-    {
-        if(!is_logged_in()) {
-            $this->render('user/login');
-        }
-        
+    {    
         $thread     = Thread::get(Param::get('thread_id'));
         $comment    = new Comment;
         $page       = Param::get('page_next', 'write');
