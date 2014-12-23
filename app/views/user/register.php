@@ -16,7 +16,16 @@
             <div>
                 <em>Password</em> must be between
                 <?php eh($user->validation['password']['length'][1]) ?>
-                <?php eh($user->validation['password']['length'][2]) ?>
+                and
+                <?php eh($user->validation['password']['length'][2]) ?>.
+            </div>
+        <?php endif ?>
+
+        <?php if ($user->validation_errors['username']['duplicate']): ?>
+            <div>
+                The username
+                <em><?php eh($user->username) ?></em>
+                is already registered, please use another.
             </div>
         <?php endif ?>
     </div>
