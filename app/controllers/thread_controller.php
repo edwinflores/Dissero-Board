@@ -3,20 +3,23 @@ class ThreadController extends AppController
 {
     const MAX_ITEM_DISPLAY = 5;
 
-    function __construct()
+    function __construct($name) //even just the function itself gives the error
     {
-       if(!is_logged_in()) {
-            redirect(url('user/login'));
-        } 
+        parent::__construct($name);
+
+       if(!is_logged_in())
+       {
+            redirectTo(url('user/login'));
+       }
     }
 
     public function index()
     {
         $current_page   = max(Param::get('page'), SimplePagination::MIN_PAGE_NUM);
         $pagination     = new SimplePagination($current_page, self::MAX_ITEM_DISPLAY);
-        
+            
         $threads        = Thread::getAll();
-        
+            
         $other_threads  = array_slice($threads, $pagination->start_index + SimplePagination::MIN_PAGE_NUM);
         $pagination->checkLastPage($other_threads);
 

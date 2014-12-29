@@ -39,3 +39,6 @@
     <input type="hidden" name="page_next" value="create_end">
     <button type="submit" class="btn btn-primary">Submit</button>
 </form>
+
+<br />
+<a class="btn btn-danger" href="<?php eh(url('thread/index')) ?>">Back to Index</a>

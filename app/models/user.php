@@ -4,7 +4,7 @@ class User extends AppModel
 {
     private $is_login_valid = true;
 
-    const MIN_NAME_CHARACTERS = 8;
+    const MIN_NAME_CHARACTERS = 3;
     const MAX_NAME_CHARACTERS = 20;
 
     const MIN_PASSWORD_CHARACTERS = 8;
