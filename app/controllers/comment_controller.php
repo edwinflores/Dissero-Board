@@ -6,7 +6,7 @@ class CommentController extends AppController
     function __constructor()
     {
         if(!is_logged_in()) {
-            redirect(url('user/login'));
+            redirectTo(url('user/login'));
         }
     }
 

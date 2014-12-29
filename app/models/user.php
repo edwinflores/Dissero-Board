@@ -4,25 +4,19 @@ class User extends AppModel
 {
     private $is_login_valid = true;
 
-    const MIN_NAME_CHARACTERS = 3;
-    const MAX_NAME_CHARACTERS = 20;
-
-    const MIN_PASSWORD_CHARACTERS = 8;
-    const MAX_PASSWORD_CHARACTERS = 20;
-
     public $validation = array(
 
             'username' => array(
                 'duplicate' => array('checkDuplicates'
                 ),
                 'length' => array(
-                    'validate_between', self::MIN_NAME_CHARACTERS, self::MAX_NAME_CHARACTERS,
+                    'validate_between', MIN_USERNAME_CHARACTERS, MAX_USERNAME_CHARACTERS,
                 ),
             ),
 
             'password' => array(
                 'length' => array(
-                    'validate_between', self::MIN_PASSWORD_CHARACTERS, self::MAX_PASSWORD_CHARACTERS,
+                    'validate_between', MIN_PASSWORD_CHARACTERS, MAX_PASSWORD_CHARACTERS,
                 ),
             ),
     );

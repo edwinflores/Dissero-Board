@@ -1,23 +1,17 @@
 <?php
     class Comment extends AppModel
     {
-        const MIN_USERNAME_CHARACTERS = 8;
-        const MAX_USERNAME_CHARACTERS = 16;
-
-        const MIN_BODY_CHARACTERS = 1;
-        const MAX_BODY_CHARACTERS = 200;
-
         public $validation = array(
 
             'username' => array(
                 'length' => array(
-                    'validate_between', self::MIN_USERNAME_CHARACTERS, self::MAX_USERNAME_CHARACTERS,
+                    'validate_between', MIN_USERNAME_CHARACTERS, MAX_USERNAME_CHARACTERS,
                 ),
             ),
 
             'body' => array(
                 'length' => array(
-                    'validate_between', self::MIN_BODY_CHARACTERS, self::MAX_BODY_CHARACTERS,
+                    'validate_between', MIN_BODY_CHARACTERS, MAX_BODY_CHARACTERS,
                 ),
             ),
         );

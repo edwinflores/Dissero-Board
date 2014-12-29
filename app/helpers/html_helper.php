@@ -1,6 +1,6 @@
 <?php
 
-function eh($string)
+function encodeString($string)
 {
     if (!isset($string)) return;
     echo htmlspecialchars($string, ENT_QUOTES);
@@ -11,6 +11,11 @@ function readable_text($s)
     $s = htmlspecialchars($s, ENT_QUOTES);
     $s = nl2br($s);
     return $s;
+}
+
+function redirectTo($url)
+{
+    header("Location: $url");
 }
 
 function createPageLinks($total_rows, $current_page, $max_rows, $extra_params = null)

@@ -67,6 +67,6 @@ class UserController extends AppController
     public function logout()
     {
         session_destroy();
-        $this->render(url('user/login'));
+        redirectTo(url('user/login'));
     }
 }
