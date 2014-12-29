@@ -45,7 +45,7 @@ class UserController extends AppController
                 $user->username = Param::get('username');
                 $user->password = Param::get('password');
 
-                try{
+                try {
                     $userAccount = $user->verify();
 
                     $_SESSION['id'] = $userAccount['id'];

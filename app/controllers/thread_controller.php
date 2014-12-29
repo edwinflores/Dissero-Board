@@ -7,7 +7,7 @@ class ThreadController extends AppController
     {
         parent::__construct($name);
 
-       if(!is_logged_in())
+       if (!is_logged_in())
        {
             redirectTo(url('user/login'));
        }
@@ -46,7 +46,7 @@ class ThreadController extends AppController
                 $comment->username  = Param::get('username');
                 $comment->body      = Param::get('body');
 
-                try{
+                try {
                     $thread->create($comment);
                 } catch (ValidationException $e) {
                     $page = 'create';

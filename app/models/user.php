@@ -7,7 +7,7 @@ class User extends AppModel
     public $validation = array(
 
             'username' => array(
-                'duplicate' => array('checkDuplicates'
+                'duplicate' => array('isRegistered'
                 ),
                 'length' => array(
                     'validate_between', MIN_USERNAME_CHARACTERS, MAX_USERNAME_CHARACTERS,
@@ -22,15 +22,16 @@ class User extends AppModel
     );
 
     //Check if the username is already registered
-    public function checkDuplicates($username)
+    public function isRegistered($username)
     {
         $db = DB::conn();
         $query = "SELECT id FROM user WHERE BINARY username = ?";
         $row = $db->row($query, array($this->username));
 
-        if($row) {
+        if ($row) 
+        {
             return false;
-        } else{
+        } else {
             return true;
         }
     }
@@ -54,7 +55,7 @@ class User extends AppModel
         $query = "SELECT id FROM user WHERE username = ?";
         $row = $db->row($query, array($this->username));
 
-        if($row)
+        if ($row)
         {
             throw new ValidationException('Username is already registered, use another.');
         }
@@ -71,7 +72,7 @@ class User extends AppModel
         $db = DB::conn();
         $row = $db->row($query, array($this->username, $this->password));
 
-        if(!$row)
+        if (!$row)
         {
             $this->is_login_valid = false;
             throw new UserNotFoundException('Wrong username or password. Please try again');

@@ -5,7 +5,7 @@ class CommentController extends AppController
 
     function __constructor()
     {
-        if(!is_logged_in()) {
+        if (!is_logged_in()) {
             redirectTo(url('user/login'));
         }
     }
@@ -14,7 +14,6 @@ class CommentController extends AppController
     public function view()
     {
         $thread     = Thread::get(Param::get('thread_id'));
-        $comments   = array();
         $cur_page   = max(Param::get('page'), SimplePagination::MIN_PAGE_NUM);
         $pagination = new SimplePagination($cur_page, self::MAX_ITEM_DISPLAY);
         
