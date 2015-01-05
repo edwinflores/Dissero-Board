@@ -7,7 +7,7 @@
     </div>
 <?php endif; ?>
 
-<form class="well" method="POST" action="<?php encodeString(url('user/login'))?>">
+<form class="well" method="POST" action="<?php encode_string(url('user/login'))?>">
     <label><font style="font-size: 20px">Username:</font></label>
     <input type="text" name="username" required>
     <label><font style="font-size: 20px">Password:</font></label>
@@ -18,5 +18,5 @@
 
 <div>
     <font style="font-size: 18px">Register here:</font><br />
-    <a class="btn btn-primary" href="<?php encodeString(url('user/register')) ?>">Register</a>
+    <a class="btn btn-primary" href="<?php encode_string(url('user/register')) ?>">Register</a>
 </div>

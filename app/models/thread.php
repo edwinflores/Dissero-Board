@@ -10,7 +10,7 @@ class Thread extends AppModel
         ),
     );
 
-    public static function get ($id)
+    public static function get($id)
     {
         $db = DB::conn();
         $row = $db->row('SELECT * FROM thread WHERE id = ?', array($id));
@@ -22,7 +22,7 @@ class Thread extends AppModel
         return new self($row);
     }
 
-    public static function getAll ()
+    public static function getAll()
     {
         $threads = array();
         $db = DB::conn();
@@ -35,7 +35,7 @@ class Thread extends AppModel
         return $threads;
     }
 
-    public function create (Comment $comment)
+    public function create(Comment $comment)
     {
         $this->validate();
         $comment->validate();

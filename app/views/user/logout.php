@@ -2,4 +2,4 @@
     Successfully logged out.
 </p>
 
-<a class="btn btn-primary" href="<?php encodeString(url('user/login')) ?>"Return to Home</a>
+<a class="btn btn-primary" href="<?php encode_string(url('user/login')) ?>"Return to Home</a>

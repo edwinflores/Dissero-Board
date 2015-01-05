@@ -6,11 +6,11 @@ class ThreadController extends AppController
         parent::__construct($name);
 
        if (!is_logged_in()) {
-            redirectTo(url('user/login'));
+            redirect_to(url('user/login'));
        }
     }
 
-    public function index ()
+    public function index()
     {
         $current_page = max(Param::get('page'), SimplePagination::MIN_PAGE_NUM);
         $pagination = new SimplePagination($current_page, MAX_ITEM_DISPLAY);   
@@ -23,7 +23,7 @@ class ThreadController extends AppController
         $this->set(get_defined_vars());
     }
 
-    public function create ()
+    public function create()
     {   
         $thread = new Thread;
         $comment = new Comment;

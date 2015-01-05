@@ -21,7 +21,7 @@ class User extends AppModel
             ),
     );
 
-    private function getRowByUsername ()
+    private function getRowByUsername()
     {
         $db = DB::conn();
         $query = "SELECT id FROM user WHERE BINARY username = ?";
@@ -31,14 +31,14 @@ class User extends AppModel
     }
 
     //Check if the username is already registered
-    public function isRegistered ()
+    public function isRegistered()
     {
         $row = self::getRowByUsername();
         return(empty($row));
     }
 
     //Adds a user
-    public function register ()
+    public function register()
     {
         if (!$this->validate()) {
             throw new ValidationException('Invalid username or password input');
@@ -58,7 +58,7 @@ class User extends AppModel
     }
 
     //Verifies login credentials
-    public function verify ()
+    public function verify()
     {
         $db = DB::conn();
         $query = "SELECT id, username FROM user WHERE BINARY username = ? AND BINARY password = ?";
@@ -73,7 +73,7 @@ class User extends AppModel
     }
 
     //Called to check if the login is valid or not
-    public function isLoginValid ()
+    public function isLoginValid()
     {
         return $this->is_login_valid;
     }

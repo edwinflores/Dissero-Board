@@ -6,12 +6,12 @@ class CommentController extends AppController
         parent::__construct($name);
 
         if (!is_logged_in()) {
-            redirectTo(url('user/login'));
+            redirect_to(url('user/login'));
         }
     }
 
     //Display thread and it's comments
-    public function view ()
+    public function view()
     {
         $thread = Thread::get(Param::get('thread_id'));
         $cur_page = max(Param::get('page'), SimplePagination::MIN_PAGE_NUM);
@@ -26,7 +26,7 @@ class CommentController extends AppController
     }
 
     //Add new comment
-    public function write ()
+    public function write()
     {    
         $thread = Thread::get(Param::get('thread_id'));
         $comment = new Comment;

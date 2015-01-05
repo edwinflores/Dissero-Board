@@ -7,33 +7,33 @@
         <?php if ($user->validation_errors['username']['length']): ?>
             <div>
                 <em>Username</em> must be between
-                <?php encodeString($user->validation['username']['length'][1]) ?> and
-                <?php encodeString($user->validation['username']['length'][2]) ?> characters in length.
+                <?php encode_string($user->validation['username']['length'][1]) ?> and
+                <?php encode_string($user->validation['username']['length'][2]) ?> characters in length.
             </div>
         <?php endif ?>
 
         <?php if ($user->validation_errors['password']['length']): ?>
             <div>
                 <em>Password</em> must be between
-                <?php encodeString($user->validation['password']['length'][1]) ?>
+                <?php encode_string($user->validation['password']['length'][1]) ?>
                 and
-                <?php encodeString($user->validation['password']['length'][2]) ?>.
+                <?php encode_string($user->validation['password']['length'][2]) ?>.
             </div>
         <?php endif ?>
 
         <?php if ($user->validation_errors['username']['duplicate']): ?>
             <div>
                 The username
-                <em><?php encodeString($user->username) ?></em>
+                <em><?php encode_string($user->username) ?></em>
                 is already registered, please use another.
             </div>
         <?php endif ?>
     </div>
 <?php endif ?>
 
-<form class="well" method="POST" action="<?php encodeString(url('user/register')) ?>">
+<form class="well" method="POST" action="<?php encode_string(url('user/register')) ?>">
     <label><font style="font-size: 18px">Set Username:</font></label>
-    <input type="text" class="span2" name="username" value="<?php encodeString(Param::get('username')) ?>" required><br />
+    <input type="text" class="span2" name="username" value="<?php encode_string(Param::get('username')) ?>" required><br />
 
     <label><font style="font-size: 18px">Set Password:</font></label>
     <input type="password" class="span2" name="password" required><br />
@@ -44,5 +44,5 @@
 
 <div>
     <em><font style="font-size: 15px">If you already have an account, log-in here:</font></em><br />
-    <a class="btn btn-danger" href="<?php encodeString(url('user/login')) ?>">Login</a>
+    <a class="btn btn-danger" href="<?php encode_string(url('user/login')) ?>">Login</a>
 </div>

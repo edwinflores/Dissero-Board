@@ -3,7 +3,7 @@
 class UserController extends AppController
 {
     //Fetch values from registration page
-    public function register ()
+    public function register()
     {
         $user = new User;
         $page = Param::get('page_next', 'register');
@@ -32,7 +32,7 @@ class UserController extends AppController
     }
 
     // Verify values from login page
-    public function login ()
+    public function login()
     {
         $user = new User;
         $page = Param::get('page_next', 'login');
@@ -64,9 +64,9 @@ class UserController extends AppController
     }
 
     //Removes the session
-    public function logout ()
+    public function logout()
     {
         session_destroy();
-        redirectTo(url('user/login'));
+        redirect_to(url('user/login'));
     }
 }

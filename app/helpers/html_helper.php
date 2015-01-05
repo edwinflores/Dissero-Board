@@ -1,6 +1,6 @@
 <?php
 
-function encodeString($string)
+function encode_string($string)
 {
     if (!isset($string)) return;
     echo htmlspecialchars($string, ENT_QUOTES);
@@ -13,7 +13,7 @@ function readable_text($s)
     return $s;
 }
 
-function redirectTo($url)
+function redirect_to($url)
 {
     header("Location: $url");
 }

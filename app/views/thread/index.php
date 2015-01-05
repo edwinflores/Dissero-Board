@@ -4,8 +4,8 @@
     <?php foreach ($threads as $row): ?>
     <li>
         <font style="font-size: 18px">
-        <a href="<?php encodeString(url('comment/view', array('thread_id' => $row->id))) ?>">
-        <?php encodeString($row->title) ?></a>
+        <a href="<?php encode_string(url('comment/view', array('thread_id' => $row->id))) ?>">
+        <?php encode_string($row->title) ?></a>
         </font>
     </li>
     <br />
@@ -14,20 +14,20 @@
     <div class="pagination">
         <font style="font-size: 15px">
         <?php if($pagination->current > 1): ?>
-            &nbsp;<a class='btn btn-primary' href='?page=<?php encodeString($pagination->prev) ?>'>Previous</a>
+            &nbsp;<a class='btn btn-primary' href='?page=<?php encode_string($pagination->prev) ?>'>Previous</a>
         <?php endif ?>
 
         &nbsp; <?php echo $page_links; ?> &nbsp;&nbsp;&nbsp;
 
         <?php if(!$pagination->is_last_page): ?>
-            &nbsp;<a class='btn btn-primary' href='?page=<?php encodeString($pagination->next) ?>'>Next</a>
+            &nbsp;<a class='btn btn-primary' href='?page=<?php encode_string($pagination->next) ?>'>Next</a>
         <?php endif ?>
         </font>
     </div>
 </ul>
 
 
-<a class="btn btn-large btn-primary" href="<?php encodeString(url('thread/create')) ?>">Create</a>
+<a class="btn btn-large btn-primary" href="<?php encode_string(url('thread/create')) ?>">Create</a>
 <br />
 <br />
-<a class="btn btn btn-danger" href="<?php encodeString(url('user/logout')) ?>">Logout</a>
+<a class="btn btn btn-danger" href="<?php encode_string(url('user/logout')) ?>">Logout</a>
