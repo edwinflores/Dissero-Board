@@ -47,11 +47,12 @@ class Thread extends AppModel
         try {
             $db = DB::conn();
             $db->begin();
-            $db->query('INSERT INTO thread SET title = ?, created=NOW()', array($this->title));
+            $param = array(
+                'title' => $this->title,
+                'created' => NOW()
+            );
 
-            $this->id = $db->lastInsertId();
-            $comment->write($this->id, $comment);
-
+            $db->insert('thread', $params);
             $db->commit();
         } catch (RecordNotFoundException $e) {
             $db->rollback();

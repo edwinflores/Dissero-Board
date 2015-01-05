@@ -1,8 +1,7 @@
 <h2><font style="font-size: 50px">Log-in Screen</font></h2><br />
 
 <?php
-    if (!$user->isLoginValid()):
-    ?>
+    if (!$user->isLoginValid()): ?>
     <div class="alert">
         <div>Invalid Username and/or Password</div>
     </div>

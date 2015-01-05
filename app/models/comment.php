@@ -38,9 +38,11 @@
             }
 
             $db = DB::conn();
-            $db->query(
-                'INSERT INTO comment SET thread_id=?, username=?, body=?, created=NOW()', array($thread_id, $comment->username, $comment->body)
+            $params = array(
+                'title' => $this->title,
+                'created' => NOW())
             );
+            $db->insert('thread', $params);
         }
     }
 ?>

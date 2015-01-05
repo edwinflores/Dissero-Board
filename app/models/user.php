@@ -28,7 +28,7 @@ class User extends AppModel
         $query = "SELECT id FROM user WHERE BINARY username = ?";
         $row = $db->row($query, array($this->username));
 
-        return(!empty($row));
+        return(empty($row));
     }
 
     //Adds a user
