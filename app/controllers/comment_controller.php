@@ -1,9 +1,12 @@
 <?php
 class CommentController extends AppController
 {
-    function __constructor()
+    function __construct($name)
     {
-        if (!is_logged_in()) {
+        parent::__construct($name);
+
+        if (!is_logged_in()) 
+        {
             redirectTo(url('user/login'));
         }
     }

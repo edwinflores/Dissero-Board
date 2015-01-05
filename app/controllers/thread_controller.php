@@ -1,7 +1,7 @@
 <?php
 class ThreadController extends AppController 
 {
-    function __construct($name) //even just the function itself gives the error
+    function __construct($name)
     {
         parent::__construct($name);
 
