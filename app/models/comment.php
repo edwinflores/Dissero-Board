@@ -23,8 +23,8 @@
             $rows = $db->rows(
                 'SELECT * FROM comment WHERE thread_id = ? ORDER BY created ASC', array($thread_id));
 
+            $comments = array();
             foreach ($rows as $row){
-                $comments = array();
                 $comments[] = new Comment($row);
             }
 
@@ -41,7 +41,7 @@
             $db = DB::conn();
             $params = array(
                 'title' => $this->title,
-                'created' => NOW())
+                'created' => NOW()
             );
             $db->insert('thread', $params);
         }

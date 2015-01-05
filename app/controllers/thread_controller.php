@@ -1,15 +1,6 @@
 <?php
 class ThreadController extends AppController 
 {
-    function __construct($name)
-    {
-        parent::__construct($name);
-
-       if (!is_logged_in()) {
-            redirect_to(url('user/login'));
-       }
-    }
-
     public function index()
     {
         $current_page = max(Param::get('page'), SimplePagination::MIN_PAGE_NUM);

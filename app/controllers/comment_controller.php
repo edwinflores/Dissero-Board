@@ -1,15 +1,6 @@
 <?php
 class CommentController extends AppController
 {
-    function __construct($name)
-    {
-        parent::__construct($name);
-
-        if (!is_logged_in()) {
-            redirect_to(url('user/login'));
-        }
-    }
-
     //Display thread and it's comments
     public function view()
     {

@@ -29,7 +29,7 @@ class Thread extends AppModel
         $rows = $db->rows('SELECT * FROM thread');
 
         foreach ($rows as $row){
-            $threads[] = new Thread($row);
+            $threads[] = new self($row);
         }
 
         return $threads;
