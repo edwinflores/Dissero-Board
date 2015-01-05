@@ -1,8 +1,6 @@
 <?php
 class CommentController extends AppController
 {
-    const MAX_ITEM_DISPLAY = 5;
-
     function __constructor()
     {
         if (!is_logged_in()) {
@@ -15,11 +13,12 @@ class CommentController extends AppController
     {
         $thread     = Thread::get(Param::get('thread_id'));
         $cur_page   = max(Param::get('page'), SimplePagination::MIN_PAGE_NUM);
-        $pagination = new SimplePagination($cur_page, self::MAX_ITEM_DISPLAY);
+        $pagination = new SimplePagination($cur_page, MAX_ITEM_DISPLAY);
         
         $comments        = Comment::getAll($thread->id);
         
         $other_commments = array_slice($comments, $pagination->start_index + SimplePagination::MIN_PAGE_NUM);
+        
         $pagination->checkLastPage($other_commments);
 
         $page_links = createPageLinks(count($comments), $cur_page, $pagination->count, 'thread_id=' . $thread->id);

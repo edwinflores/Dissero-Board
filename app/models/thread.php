@@ -24,7 +24,8 @@ class Thread extends AppModel
         return new self($row);
     }
 
-    public static function getAll(){
+    public static function getAll()
+    {
         $threads = array();
 
         $db = DB::conn();
