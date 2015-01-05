@@ -21,13 +21,19 @@ class User extends AppModel
             ),
     );
 
-    //Check if the username is already registered
-    public function isRegistered ()
+    private function getRowByUsername ()
     {
         $db = DB::conn();
         $query = "SELECT id FROM user WHERE BINARY username = ?";
         $row = $db->row($query, array($this->username));
 
+        return $row;
+    }
+
+    //Check if the username is already registered
+    public function isRegistered ()
+    {
+        $row = self::getRowByUsername();
         return(empty($row));
     }
 
@@ -43,10 +49,7 @@ class User extends AppModel
             'password' => $this->password
         );
 
-        $db = DB::conn();
-        $query = "SELECT id FROM user WHERE username = ?";
-        $row = $db->row($query, array($this->username));
-
+        $row = self::getRowByUsername();
         if ($row) {
             throw new ValidationException('Username is already registered, use another.');
         }
