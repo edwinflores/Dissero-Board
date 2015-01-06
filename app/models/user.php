@@ -29,7 +29,7 @@ class User extends AppModel
         $query = "SELECT id FROM user WHERE BINARY username = ?";
         $row = $db->row($query, array($this->username));
 
-        return (bool) $row;
+        return(empty($row));
     }
 
     /**
@@ -41,16 +41,16 @@ class User extends AppModel
             throw new ValidationException('Invalid username or password input');
         }
 
+        if (!$this->isRegistered()) {
+            throw new ValidationException('Username is already registered, use another.');
+        }
+
         $input = array(
             'username' => $this->username,
             'password' => $this->password
         );
 
-        //$row = self::getRowByUsername();
-        if ($this->isRegistered()) {
-            throw new ValidationException('Username is already registered, use another.');
-        }
-
+        $db = DB::conn();
         $db->insert('user', $input);
     }
 
