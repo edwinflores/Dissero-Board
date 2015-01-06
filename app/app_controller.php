@@ -5,9 +5,9 @@ class AppController extends Controller
 
     function beforeFilter()
     {
-    	$exclude = array(
-    			'user/register',
-    			'user/login');
+      $exclude = array(
+    		'user/register',
+    		'user/login');
 
     	if (in_array(Param::get(DC_ACTION), $exclude)) {
     		return;

@@ -5,14 +5,14 @@ class CommentController extends AppController
     public function view()
     {
         $thread = Thread::get(Param::get('thread_id'));
-        $cur_page = max(Param::get('page'), SimplePagination::MIN_PAGE_NUM);
-        $pagination = new SimplePagination($cur_page, MAX_ITEM_DISPLAY);
+        $current_page = max(Param::get('page'), SimplePagination::MIN_PAGE_NUM);
+        $pagination = new SimplePagination($current_page, MAX_ITEM_DISPLAY);
         $comments = Comment::getAll($thread->id);
         $other_commments = array_slice($comments, $pagination->start_index + SimplePagination::MIN_PAGE_NUM);
         $pagination->checkLastPage($other_commments);
-        $page_links = createPageLinks(count($comments), $cur_page, $pagination->count, 'thread_id=' . $thread->id);
+        $page_links = createPageLinks(count($comments), $current_page, $pagination->count, 'thread_id=' . $thread->id);
         $comments = array_slice($comments, $pagination->start_index -1, $pagination->count);
-
+        
         $this->set(get_defined_vars());
     }
 

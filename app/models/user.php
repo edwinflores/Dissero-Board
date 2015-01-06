@@ -5,7 +5,6 @@ class User extends AppModel
     private $is_login_valid = true;
 
     public $validation = array(
-
             'username' => array(
                 'duplicate' => array('isRegistered'
                 ),

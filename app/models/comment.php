@@ -19,9 +19,7 @@
       public static function getAll($thread_id)
       {
          $db = DB::conn();
-         $rows = $db->rows(
-            'SELECT * FROM comment WHERE thread_id = ? ORDER BY created ASC', array($thread_id));
-
+         $rows = $db->search('comment', 'thread_id = ?', array($thread_id), 'created ASC');
          $comments = array();
          foreach ($rows as $row){
             $comments[] = new self($row);
