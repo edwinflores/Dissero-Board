@@ -20,7 +20,9 @@ class User extends AppModel
             ),
     );
 
-    //Check if the username is already registered
+    /**
+     * Check if the username is already registered
+     */
     public function isRegistered()
     {
         $db = DB::conn();
@@ -30,7 +32,9 @@ class User extends AppModel
         return (bool) $row;
     }
 
-    //Adds a user
+    /**
+     * Adds a user
+     */
     public function register()
     {
         if (!$this->validate()) {
@@ -50,7 +54,9 @@ class User extends AppModel
         $db->insert('user', $input);
     }
 
-    //Verifies login credentials
+    /**
+     * Verifies login credentials
+     */
     public function verify()
     {
         $db = DB::conn();
@@ -65,7 +71,9 @@ class User extends AppModel
         return $row;
     }
 
-    //Called to check if the login is valid or not
+    /** 
+     * Called to check if the login is valid or not
+     */
     public function isLoginValid()
     {
         return $this->is_login_valid;

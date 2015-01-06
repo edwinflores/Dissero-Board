@@ -1,7 +1,9 @@
 <?php
 class CommentController extends AppController
 {
-    //Display thread and it's comments
+    /**
+     * Display thread and it's comments
+     */
     public function view()
     {
         $thread = Thread::get(Param::get('thread_id'));
@@ -16,7 +18,9 @@ class CommentController extends AppController
         $this->set(get_defined_vars());
     }
 
-    //Add new comment
+    /**
+     * Add new comment
+     */
     public function write()
     {    
         $thread = Thread::get(Param::get('thread_id'));

@@ -1,6 +1,9 @@
 <?php
 class ThreadController extends AppController 
 {
+    /** 
+     * List the threads created
+     */
     public function index()
     {
         $current_page = max(Param::get('page'), SimplePagination::MIN_PAGE_NUM);
@@ -14,6 +17,9 @@ class ThreadController extends AppController
         $this->set(get_defined_vars());
     }
 
+    /**
+     * Add new thread
+     */
     public function create()
     {   
         $thread = new Thread;

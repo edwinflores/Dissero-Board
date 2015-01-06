@@ -15,7 +15,9 @@
             ),
       );
 
-      // Fetches all comments from Database
+      /**
+       * Fetches all comments from Database
+       */
       public static function getAll($thread_id)
       {
          $db = DB::conn();
@@ -28,7 +30,9 @@
          return $comments;
       }
 
-      // Inserts a new comment to the database
+      /**
+       * Inserts a new comment to the database
+       */
       public function write($thread_id, Comment $comment)
       {
          if (!$this->validate()) {

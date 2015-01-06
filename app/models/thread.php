@@ -10,6 +10,9 @@ class Thread extends AppModel
         ),
     );
 
+    /**
+     * Fetch a thread given an id
+     */
     public static function get($id)
     {
         $db = DB::conn();
@@ -22,6 +25,9 @@ class Thread extends AppModel
         return new self($row);
     }
 
+    /**
+     * Fetches all threads
+     */
     public static function getAll()
     {
         $threads = array();
@@ -35,6 +41,9 @@ class Thread extends AppModel
         return $threads;
     }
 
+    /**
+     * Insert a new thread with it's first comment to the database
+     */
     public function create(Comment $comment)
     {
         $this->validate();

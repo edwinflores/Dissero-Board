@@ -2,7 +2,9 @@
 
 class UserController extends AppController
 {
-    //Fetch values from registration page
+    /** 
+     * Fetch values from registration page
+     */
     public function register()
     {
         $user = new User;
@@ -31,7 +33,9 @@ class UserController extends AppController
         $this->render($page);
     }
 
-    // Verify values from login page
+    /**
+     * Verify values from login page
+     */
     public function login()
     {
         $user = new User;
@@ -63,7 +67,9 @@ class UserController extends AppController
         $this->render($page);
     }
 
-    //Removes the session
+    /**
+     * Removes the session
+     */
     public function logout()
     {
         session_destroy();
