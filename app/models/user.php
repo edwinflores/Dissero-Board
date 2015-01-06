@@ -44,7 +44,7 @@ class User extends AppModel
         );
 
         //$row = self::getRowByUsername();
-        if (self::isRegistered()) {
+        if ($this->isRegistered()) {
             throw new ValidationException('Username is already registered, use another.');
         }
 
