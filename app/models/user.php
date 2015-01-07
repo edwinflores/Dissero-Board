@@ -1,0 +1,81 @@
+<?php
+
+class User extends AppModel
+{
+    private $is_login_valid = true;
+
+    public $validation = array(
+            'username' => array(
+                'duplicate' => array('isRegistered'
+                ),
+                'length' => array(
+                    'validate_between', MIN_USERNAME_CHARACTERS, MAX_USERNAME_CHARACTERS,
+                ),
+            ),
+
+            'password' => array(
+                'length' => array(
+                    'validate_between', MIN_PASSWORD_CHARACTERS, MAX_PASSWORD_CHARACTERS,
+                ),
+            ),
+    );
+
+    /**
+     * Check if the username is already registered
+     */
+    public function isRegistered()
+    {
+        $db = DB::conn();
+        $query = "SELECT id FROM user WHERE BINARY username = ?";
+        $row = $db->row($query, array($this->username));
+
+        return(empty($row));
+    }
+
+    /**
+     * Adds a user
+     */
+    public function register()
+    {
+        if (!$this->validate()) {
+            throw new ValidationException('Invalid username or password input');
+        }
+
+        if (!$this->isRegistered()) {
+            throw new ValidationException('Username is already registered, use another.');
+        }
+
+        $input = array(
+            'username' => $this->username,
+            'password' => $this->password
+        );
+
+        $db = DB::conn();
+        $db->insert('user', $input);
+    }
+
+    /**
+     * Verifies login credentials
+     */
+    public function verify()
+    {
+        $db = DB::conn();
+        $query = "SELECT id, username FROM user WHERE BINARY username = ? AND BINARY password = ?";
+        $row = $db->row($query, array($this->username, $this->password));
+
+        if (!$row) {
+            $this->is_login_valid = false;
+            throw new UserNotFoundException('Wrong username or password. Please try again');
+        }
+
+        return $row;
+    }
+
+    /** 
+     * Called to check if the login is valid or not
+     */
+    public function isLoginValid()
+    {
+        return $this->is_login_valid;
+    }
+}
