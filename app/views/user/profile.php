@@ -21,4 +21,7 @@
 </form>
 
 <br />
+<a class="btn btn-danger" href="<?php encode_string(url('user/delete')) ?>">Delete Account</a>
+
+<br /><br />
 <a class="btn btn-danger" href="<?php encode_string(url('thread/index')) ?>">Back to Index</a>

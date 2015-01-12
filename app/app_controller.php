@@ -14,7 +14,7 @@ class AppController extends Controller
     	}
 
     	if (!is_logged_in()) {
-            redirect_to(url('user/login'));
+            redirect_to(url('user/login', 'user/profile'));
         }
     }
 }

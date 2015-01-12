@@ -121,11 +121,20 @@ class User extends AppModel
     }
 
     /**
+     * Deletes user account
+     */
+    public function deleteAccount($user_id)
+    {
+        $db = DB::conn();
+        $db->query('DELETE FROM user WHERE id = ?', array($user_id));
+    }
+
+    /**
      * Update user profile
      */
     public function updateProfile()
     {
-        
+
     }
 
     /** 

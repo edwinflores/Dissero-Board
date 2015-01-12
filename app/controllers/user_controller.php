@@ -81,6 +81,7 @@ class UserController extends AppController
                 break;
             case 'profile_end':
                 $user->username = Param::get('username');
+                $user->password = Param::get('password');
                 $user->email = Param::get('email');
 
                 try {
@@ -90,11 +91,25 @@ class UserController extends AppController
                 }
                 break;
             default:
-                throw new PageNotFoundExcpetion('{$page} not found');
+                throw new PageNotFoundException('{$page} not found');
         }
 
         $this->set(get_defined_vars());
         $this->render($page);
+    }
+
+    /**
+     * Deletes user profile
+     */
+    public function delete()
+    {
+        $user = User::get($_SESSION['id']);
+      
+        if(Param::get('delete')) {
+            $user->deleteAccount($user->id);
+        }
+
+        redirect_to(url('user/login'));
     }
 
     /**
