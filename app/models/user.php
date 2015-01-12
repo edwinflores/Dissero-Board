@@ -68,7 +68,7 @@ class User extends AppModel
 
         $input = array(
             'username' => $this->username,
-            'password' => $this->password,
+            'password' => encrypt_decrypt("encrypt", $this->password),
             'email' => $this->email
         );
 
@@ -83,7 +83,7 @@ class User extends AppModel
     {
         $db = DB::conn();
         $query = "SELECT id, username FROM user WHERE BINARY username = ? AND BINARY password = ?";
-        $row = $db->row($query, array($this->username, $this->password));
+        $row = $db->row($query, array($this->username, encrypt_decrypt("encrypt", $this->password)));
 
         if (!$row) {
             $this->is_login_valid = false;
