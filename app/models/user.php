@@ -6,7 +6,7 @@ class User extends AppModel
 
     public $validation = array(
             'username' => array(
-                'duplicate' => array('isRegistered'
+                'duplicate' => array('isUsernameRegistered'
                 ),
                 'length' => array(
                     'validate_between', MIN_USERNAME_CHARACTERS, MAX_USERNAME_CHARACTERS,
@@ -18,16 +18,33 @@ class User extends AppModel
                     'validate_between', MIN_PASSWORD_CHARACTERS, MAX_PASSWORD_CHARACTERS,
                 ),
             ),
+
+            'email' => array(
+                'duplicate' => array('isEmailRegistered'
+                ),
+            ), 
     );
 
     /**
      * Check if the username is already registered
      */
-    public function isRegistered()
+    public function isUsernameRegistered()
     {
         $db = DB::conn();
         $query = "SELECT id FROM user WHERE BINARY username = ?";
         $row = $db->row($query, array($this->username));
+
+        return(empty($row));
+    }
+
+    /**
+     * Check if the email address is already registered
+     */
+    public function isEmailRegistered()
+    {
+        $db = DB::conn();
+        $query = "SELECT email FROM user WHERE BINARY email = ?";
+        $row = $db->row($query, array($this->email));
 
         return(empty($row));
     }
@@ -41,13 +58,18 @@ class User extends AppModel
             throw new ValidationException('Invalid username or password input');
         }
 
-        if (!$this->isRegistered()) {
+        if (!$this->isUsernameRegistered()) {
             throw new ValidationException('Username is already registered, use another.');
+        }
+
+        if (!$this->isEmailRegistered()) {
+            throw new ValidationException('Email is already registered, use another.');
         }
 
         $input = array(
             'username' => $this->username,
-            'password' => $this->password
+            'password' => $this->password,
+            'email' => $this->email
         );
 
         $db = DB::conn();

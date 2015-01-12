@@ -32,11 +32,14 @@
 <?php endif ?>
 
 <form class="well" method="POST" action="<?php encode_string(url('user/register')) ?>">
-    <label><font style="font-size: 18px">Set Username:</font></label>
+    <label><font style="font-size: 18px">Username:</font></label>
     <input type="text" class="span2" name="username" value="<?php encode_string(Param::get('username')) ?>" required><br />
 
-    <label><font style="font-size: 18px">Set Password:</font></label>
+    <label><font style="font-size: 18px">Password:</font></label>
     <input type="password" class="span2" name="password" required><br />
+
+    <label><font style="font-size: 18px">Email Address:</font></label>
+    <input type="email" class="span2" name="email" required><br />
 
     <input type="hidden" name="page_next" value="register_end">
     <button type="submit" class="btn btn-primary">Register</button>
