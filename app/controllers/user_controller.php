@@ -69,6 +69,35 @@ class UserController extends AppController
     }
 
     /**
+     * Updates user profile
+     */
+    public function profile()
+    {
+        $user = User::get($_SESSION['id']);
+        $page = Param::get('page_next', 'profile');
+
+        switch ($page) {
+            case 'profile':
+                break;
+            case 'profile_end':
+                $user->username = Param::get('username');
+                $user->email = Param::get('email');
+
+                try {
+                    $user->updateProfile();
+                } catch (ValidationException $e) {
+                    $page = 'profile';
+                }
+                break;
+            default:
+                throw new PageNotFoundExcpetion('{$page} not found');
+        }
+
+        $this->set(get_defined_vars());
+        $this->render($page);
+    }
+
+    /**
      * Removes the session
      */
     public function logout()

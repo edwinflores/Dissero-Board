@@ -93,6 +93,41 @@ class User extends AppModel
         return $row;
     }
 
+    /**
+     * Fetches a user's data
+     */
+    public static function get($user_id)
+    {
+        $db = DB::conn();
+        $row = $db->row("SELECT * FROM user WHERE id = ?", array($user_id));
+
+        if(!$row) {
+            throw new UserNotFoundException('User not found.');
+        }
+
+        return new self($row);
+    }
+
+    public static function getAll()
+    {
+        $db = DB::conn();
+        $rows = $db->rows('SELECT * FROM user ORDER BY created DESC');
+
+        $users = array();
+        foreach ($rows as $row) {
+            $users[] = new self($row);
+        }
+        return $users;
+    }
+
+    /**
+     * Update user profile
+     */
+    public function updateProfile()
+    {
+        
+    }
+
     /** 
      * Called to check if the login is valid or not
      */
