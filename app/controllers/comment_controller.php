@@ -40,6 +40,7 @@ class CommentController extends AppController
 
                 try {
                     $comment->write($comment);
+                    $user->addCommentCount();
                 } catch (ValidationException $e) {
                     $page = 'write';
                 }
@@ -63,7 +64,7 @@ class CommentController extends AppController
         $this->set(get_defined_vars());
 
         if(Param::get('delete')) {
-            $comment->deleteComment($comment->id);
+            $comment->deleteComment($comment);
             $this->render('delete_end');
         }
     }

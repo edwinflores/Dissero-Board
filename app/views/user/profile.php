@@ -11,9 +11,9 @@
     <input type="email" class="span2" name="email" value="<?php encode_string($user->email) ?>" ><br />
     <br />
     <label><font style="font-size: 20px">Rank</font></label>
-   	<font style="font-size: 15px"><?php echo readable_text($user->rank) ?></font>
+   	<font style="font-size: 15px"><?php echo readable_text($user->getRank()) ?></font>
     <br />
-   	<label><font style="font-size: 20px">Rank</font></label>
+   	<label><font style="font-size: 20px">Comment count</font></label>
    	<font style="font-size: 15px"><?php echo readable_text($user->comment_count) ?></font>
     <br />
     <label><font style="font-size: 20px">Member Since:</font></label>

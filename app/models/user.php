@@ -108,6 +108,9 @@ class User extends AppModel
         return new self($row);
     }
 
+    /**
+     * Fetches all registered users
+     */
     public static function getAll()
     {
         $db = DB::conn();
@@ -143,5 +146,61 @@ class User extends AppModel
     public function isLoginValid()
     {
         return $this->is_login_valid;
+    }
+
+    public function getRank()
+    {
+        switch ($this->rank) {
+            case 1:
+                return 'Power';
+                break;
+            case 2:
+                return 'Virtue';
+                break;
+            case 3:
+                return 'Dominion';
+                break;
+            case 4:
+                return 'Throne';
+                break;
+            case 5:
+                return 'Cherubim';
+                break;
+            default:
+                return 'Rank Unknown';
+        }
+    }
+
+    public function updateRank($count)
+    {
+        $db = DB::conn();
+
+        if ($count >= 5 && $count < 10) {
+            $db->update('user', array('rank' => 2), array('id' => $this->id)); 
+        } else if ($count >= 10 && $count < 15) {
+            $db->update('user', array('rank' => 3), array('id' => $this->id)); 
+        } else if ($count >= 15 && $count < 20) {
+            $db->update('user', array('rank' => 4), array('id' => $this->id)); 
+        } else if ($count >= 20 && $count < 25) {
+            $db->update('user', array('rank' => 5), array('id' => $this->id)); 
+        }
+    }
+
+    public function addCommentCount()
+    {
+        $db = DB::conn();
+        $currentCount = $db->value('SELECT comment_count FROM user WHERE id = ?', array($this->id));
+        $newCount = $currentCount + 1;
+        $db->update('user', array('comment_count' => $newCount), array('id' => $this->id));
+        $this->updateRank($newCount);
+    }
+
+    public function subtractCommentCount()
+    {
+        $db = DB::conn();
+        $currentCount = $db->value('SELECT comment_count FROM user WHERE id = ?', array($this->id));
+        $newCount = $currentCount - 1;
+        $db->update('user', array('comment_count' => $newCount), array('id' => $this->id));
+        $this->updateRank($newCount);
     }
 }

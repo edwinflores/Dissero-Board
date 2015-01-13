@@ -65,10 +65,13 @@
       /**
      * Deletes a comment
      */
-    public function deleteComment($comment_id)
+    public function deleteComment($comment)
     {
         $db = DB::conn();
-        $db->query('DELETE FROM comment WHERE id = ?', array($comment_id));
+        $db->query('DELETE FROM comment WHERE id = ?', array($comment->id));
+
+        $user = User::get($comment->user_id);
+        $user->subtractCommentCount();
     }
    }
 ?>

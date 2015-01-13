@@ -4,8 +4,9 @@
     <div class="comment">
 
         <div class="meta">
-            <font style="font-size: 20px">
-            <?php encode_string($key + 1) ?>: <?php encode_string($value->username) ?><br /> 
+            <font style="font-size: 18px"><?php encode_string($key + 1) ?>: 
+            <font style="font-size: 20px"><?php encode_string($value->username) ?><br /> 
+            <font style="font-size: 18px"> Rank : <?php encode_string(User::get($value->user_id)->getRank()) ?><br />
             <font style="font-size: 15px"> Posted : <?php encode_string($value->created) ?>
             </font>
         </div>
