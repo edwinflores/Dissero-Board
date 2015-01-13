@@ -6,7 +6,7 @@
         <div class="meta">
             <font style="font-size: 20px">
             <?php encode_string($key + 1) ?>: <?php encode_string($value->username) ?><br /> 
-            <font style="font-size: 15px"> Posted : <?php encode_string($value->created) ?>
+            <font style="font-size: 15px"> Posted : <?php encode_string(time_ago($value->created)) ?>
             </font>
         </div>
 

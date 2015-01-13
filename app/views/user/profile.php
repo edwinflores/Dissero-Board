@@ -13,8 +13,11 @@
     <label><font style="font-size: 20px">Rank</font></label>
    	<font style="font-size: 15px"><?php echo readable_text($user->rank) ?></font>
 
-   	<label><font style="font-size: 20px">Rank</font></label>
+   	<label><font style="font-size: 20px">Comment Count</font></label>
    	<font style="font-size: 15px"><?php echo readable_text($user->comment_count) ?></font>
+
+    <label><font style="font-size: 20px">Member since:</font></label>
+    <font style="font-size: 15px"><?php echo readable_text(time_ago($user->created)) ?></font>
 
     <input type="hidden" name="page_next" value="profile_end">
     <br /><button type="submit" class="btn btn-primary">Save</button>
