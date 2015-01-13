@@ -24,6 +24,7 @@ class CommentController extends AppController
     public function write()
     {    
         $thread = Thread::get(Param::get('thread_id'));
+        $user = User::get($_SESSION['id']);
         $comment = new Comment;
         $page = Param::get('page_next', 'write');
 
@@ -32,11 +33,13 @@ class CommentController extends AppController
                 break;
 
             case 'write_end':
-                $comment->username = Param::get('username');
+                $comment->thread_id = $thread->id;
+                $comment->user_id = $user->id;
+                $comment->username = $user->username;
                 $comment->body = Param::get('body');
 
                 try {
-                    $comment->write($thread->id, $comment);
+                    $comment->write($comment);
                 } catch (ValidationException $e) {
                     $page = 'write';
                 }
@@ -49,5 +52,19 @@ class CommentController extends AppController
 
         $this->set(get_defined_vars());
         $this->render($page);
+    }
+
+    /**
+     * Deletes a comment
+     */
+    public function delete()
+    {
+        $comment = Comment::get(Param::get('comment_id'));
+        $this->set(get_defined_vars());
+
+        if(Param::get('delete')) {
+            $comment->deleteComment($comment->id);
+            $this->render('delete_end');
+        }
     }
 }

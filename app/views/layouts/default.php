@@ -29,7 +29,7 @@
     </div>
 
     <script>
-    console.log(<?php eh(round(microtime(true) - TIME_START, 3)) ?> + 'sec');
+    console.log(<?php encode_string(round(microtime(true) - TIME_START, 3)) ?> + 'sec');
     </script>
 
   </body>

@@ -20,7 +20,7 @@ function  encrypt_decrypt($action, $string)
 
 	else if ($action == 'decrypt') {
 		$output = mcrypt_decrypt(MCRYPT_RIJNDAEL_256, md5($key), base64_decode($string), MCRYPT_MODE_CBC, $iv);
-		$output = rtrim($output, "");
+		$output = rtrim($output, "\0");
 	}
 
 	else {
