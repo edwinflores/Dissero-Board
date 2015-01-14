@@ -65,7 +65,7 @@
       /**
      * Deletes a comment
      */
-    public function deleteComment($comment)
+    public function delete($comment)
     {
         $db = DB::conn();
         $db->query('DELETE FROM comment WHERE id = ?', array($comment->id));
@@ -73,5 +73,16 @@
         $user = User::get($comment->user_id);
         $user->subtractCommentCount();
     }
+
+    public function edit()
+    {
+      if (!$this->validate()) {
+        throw new ValidationException('Invalid Comment');
+      }
+
+      $db = DB::conn();
+      $db->update('comment', array('body' => $this->body), array('id' => $this->id));
+    }
+
    }
 ?>
