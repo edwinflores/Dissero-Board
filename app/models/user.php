@@ -4,6 +4,7 @@ class User extends AppModel
 {
     const RANKUP_MULTIPLIER = 5;
     const MAX_RANK = 5;
+    const MIN_RANK = 1;
 
     private $is_login_valid = true;
 
@@ -168,10 +169,16 @@ class User extends AppModel
         $db = DB::conn();
 
         $numRequired = $this->rank * self::RANKUP_MULTIPLIER;
+        $previousRankReq = ($this->rank-1) * self::RANKUP_MULTIPLIER;
 
         if ($count >= $numRequired && $this->rank < self::MAX_RANK) {
-            $newRank = $this->rank + 1;
+            $newRank = ++$this->rank;
             $db->update('user', array('rank' => $newRank), array('id' => $this->id));
+        }
+
+        if ($count <= $previousRankReq && $this->rank > self::MIN_RANK) {
+            $newRank = --$this->rank;
+            $db->update('user', array('rank' => $newRank), array('id' => $this->id));            
         }
     }
 
@@ -179,7 +186,7 @@ class User extends AppModel
     {
         $db = DB::conn();
         $currentCount = $db->value('SELECT comment_count FROM user WHERE id = ?', array($this->id));
-        $newCount = $currentCount + 1;
+        $newCount = ++$currentCount;
         $db->update('user', array('comment_count' => $newCount), array('id' => $this->id));
         $this->updateRank($newCount);
     }
@@ -188,7 +195,7 @@ class User extends AppModel
     {
         $db = DB::conn();
         $currentCount = $db->value('SELECT comment_count FROM user WHERE id = ?', array($this->id));
-        $newCount = $currentCount - 1;
+        $newCount = --$currentCount;
         $db->update('user', array('comment_count' => $newCount), array('id' => $this->id));
         $this->updateRank($newCount);
     }
