@@ -2,7 +2,17 @@
 
 class User extends AppModel
 {
+    const RANKUP_MULTIPLIER = 5;
+    const MAX_RANK = 5;
+
     private $is_login_valid = true;
+
+    private $rankEquivalent = array(
+                                '1' => 'Power',
+                                '2' => 'Virtue',
+                                '3' => 'Dominion',
+                                '4' => 'Throne',
+                                '5' => 'Cherubim');
 
     public $validation = array(
             'username' => array(
@@ -150,39 +160,18 @@ class User extends AppModel
 
     public function getRank()
     {
-        switch ($this->rank) {
-            case 1:
-                return 'Power';
-                break;
-            case 2:
-                return 'Virtue';
-                break;
-            case 3:
-                return 'Dominion';
-                break;
-            case 4:
-                return 'Throne';
-                break;
-            case 5:
-                return 'Cherubim';
-                break;
-            default:
-                return 'Rank Unknown';
-        }
+        return $this->rankEquivalent[$this->rank];
     }
 
     public function updateRank($count)
     {
         $db = DB::conn();
 
-        if ($count >= 5 && $count < 10) {
-            $db->update('user', array('rank' => 2), array('id' => $this->id)); 
-        } else if ($count >= 10 && $count < 15) {
-            $db->update('user', array('rank' => 3), array('id' => $this->id)); 
-        } else if ($count >= 15 && $count < 20) {
-            $db->update('user', array('rank' => 4), array('id' => $this->id)); 
-        } else if ($count >= 20 && $count < 25) {
-            $db->update('user', array('rank' => 5), array('id' => $this->id)); 
+        $numRequired = $this->rank * self::RANKUP_MULTIPLIER;
+
+        if ($count >= $numRequired && $this->rank < self::MAX_RANK) {
+            $newRank = $this->rank + 1;
+            $db->update('user', array('rank' => $newRank), array('id' => $this->id));
         }
     }
 
@@ -223,24 +212,11 @@ class User extends AppModel
 
     public function getRemainingCommentCount()
     {
-        switch ($this->rank) {
-            case 1:
-                return 5 - $this->comment_count;
-                break;
-            case 2:
-                return 10 - $this->comment_count;
-                break;
-            case 3:
-                return 15 - $this->comment_count;
-                break;
-            case 4:
-                return 20 - $this->comment_count;
-                break;
-            case 5:
-                return 'Max Level';
-                break;
-            default:
-                return 'Rank Unknown';
+        if ($this->rank < self::MAX_RANK) {
+            return ($this->rank * self::RANKUP_MULTIPLIER) - $this->comment_count;
+        } else {
+            return 'Max Rank';    
         }
+        
     }
 }
