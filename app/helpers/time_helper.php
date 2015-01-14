@@ -1,22 +1,28 @@
 <?php
 
+const MINUTE_SECOND = 60;
+const HOUR_SECOND = 3600;
+const DAY_SECOND = 86400;
+const MONTH_SECOND = 2592000;
+const YEAR_SECOND = 31104000;
+
 function time_ago($subjectTime)
 {
-	$etime = time() - strtotime($subjectTime);
+	$deltaTime = time() - strtotime($subjectTime);
 
-	if ($etime < 1) {
+	if ($deltaTime < 1) {
 		return '0 seconds';
 	}
 
-	$interval = array(12*30*24*60*60 => 'year',
-					30*24*60*60 => 'month',
-					24*60*60 => 'day',
-					60*60 => 'hour',
-					60 => 'minute',
+	$secondConversion = array(YEAR_SECOND => 'year',
+					MONTH_SECOND => 'month',
+					DAY_SECOND => 'day',
+					HOUR_SECOND => 'hour',
+					MINUTE_SECOND => 'minute',
 					1 => 'second');
 
-	foreach ($interval as $secs => $str) {
-		$difference = $etime / $secs;
+	foreach ($secondConversion as $secs => $str) {
+		$difference = $deltaTime / $secs;
 
 		if ($difference >= 1) {
 			$result = round($difference);
