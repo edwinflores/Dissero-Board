@@ -107,11 +107,10 @@ class UserController extends AppController
         $user = User::get($_SESSION['id']);
       
         if(Param::get('delete')) {
-            Comment::deleteAllCommentOwned($user->id);       
+            Comment::deleteAllByUser($user->id);       
             $user->deleteAccount($user->id);
+            redirect_to(url('user/login'));
         }
-
-        redirect_to(url('user/login'));
     }
 
     public function ranking()

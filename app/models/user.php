@@ -207,9 +207,11 @@ class User extends AppModel
     public static function getTopTen()
     {
         $db = DB::conn();
-        $topCount = $db->rows('SELECT DISTINCT comment_count FROM user ORDER BY comment_count DESC LIMIT 10');
+        $limit = TOP_LIMIT;
+        $query = "SELECT DISTINCT comment_count FROM user ORDER BY comment_count DESC LIMIT {$limit}";
+        $topCommenters = $db->rows($query);
         $users = array();
-        foreach ($topCount as $topRow) {
+        foreach ($topCommenters as $topRow) {
             $topusers = new self($topRow);
             $rows = $db->rows('SELECT * FROM user WHERE comment_count = ?', array($topusers->comment_count));
             foreach ($rows as $row) {

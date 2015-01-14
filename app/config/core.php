@@ -24,5 +24,8 @@ define('MIN_TITLE_CHARACTERS', 1);
 define('MAX_TITLE_CHARACTERS', 30);
 define('MIN_PASSWORD_CHARACTERS', 8);
 define('MAX_PASSWORD_CHARACTERS', 20);
+
+//Display Restrictions
 define('MAX_ITEM_DISPLAY', 7);
 define('MAX_RANKING_DISPLAY', 10);
+define('TOP_LIMIT', 10);
