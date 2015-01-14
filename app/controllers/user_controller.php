@@ -120,4 +120,19 @@ class UserController extends AppController
         session_destroy();
         redirect_to(url('user/login'));
     }
+
+    public function userlist()
+    {
+        $filter = Param::get('filter');
+
+        $current_page = max(Param::get('page'), SimplePagination::MIN_PAGE_NUM);
+        $pagination = new SimplePagination($current_page, MAX_ITEM_DISPLAY);
+        $users = User::filter($filter);
+        $other_users = array_slice($users, $pagination->start_index + SimplePagination::MIN_PAGE_NUM);
+        $pagination->checkLastPage($other_users);
+        $page_links = createPageLinks(count($users), $current_page, $pagination->count);
+        $users = array_slice($users, $pagination->start_index -1, $pagination->count);
+        
+        $this->set(get_defined_vars());
+    }
 }

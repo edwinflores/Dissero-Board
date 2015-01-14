@@ -1,5 +1,5 @@
-<h1><font style="font-size: 50px">All threads</font></h1>
-
+<h1><font style="font-size: 40px">Dissero Threads</font></h1>
+<br />
 <ul>
     <?php foreach ($threads as $row): ?>
     <li>
@@ -28,6 +28,9 @@
 
 
 <a class="btn btn-large btn-primary" href="<?php encode_string(url('thread/create')) ?>">Create</a>
+<br />
+<br />
+<a class="btn btn btn-primary" href="<?php encode_string(url('user/userlist')) ?>">View User List</a>
 <br />
 <br />
 <a class="btn btn btn-danger" href="<?php encode_string(url('user/logout')) ?>">Logout</a>

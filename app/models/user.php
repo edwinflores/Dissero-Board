@@ -203,4 +203,41 @@ class User extends AppModel
         $db->update('user', array('comment_count' => $newCount), array('id' => $this->id));
         $this->updateRank($newCount);
     }
+
+    public static function filter($filter)
+    {
+        $db = DB::conn();
+
+        switch ($filter) {
+            case "Power":
+                $rank = 1;
+                break;
+            case "Virtue":
+                $rank = 2;
+                break;
+            case "Dominion":
+                $rank = 3;
+                break;
+            case "Throne":
+                $rank = 4;
+                break;
+            case "Cherubim":
+                $rank = 5;
+                break;
+            default:
+                $rank = NULL;
+        }
+
+        if($rank) {
+            $rows = $db->rows('SELECT * FROM user WHERE rank = ? ORDER BY comment_count DESC', array($rank));
+
+            $users = array();
+            foreach ($rows as $row) {
+                $users[] = new self($row);
+            }
+            return $users;
+        } else {
+            return self::getAll();
+        }
+    }
 }
