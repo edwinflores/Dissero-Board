@@ -203,4 +203,42 @@ class User extends AppModel
         $db->update('user', array('comment_count' => $newCount), array('id' => $this->id));
         $this->updateRank($newCount);
     }
+
+    public static function getTopTen()
+    {
+        $db = DB::conn();
+        $topCount = $db->rows('SELECT DISTINCT comment_count FROM user ORDER BY comment_count DESC LIMIT 10');
+        $users = array();
+        foreach ($topCount as $topRow) {
+            $topusers = new self($topRow);
+            $rows = $db->rows('SELECT * FROM user WHERE comment_count = ?', array($topusers->comment_count));
+            foreach ($rows as $row) {
+                $users[] = new self($row);
+            }
+        }
+        return $users;
+    }
+
+    public function getRemainingCommentCount()
+    {
+        switch ($this->rank) {
+            case 1:
+                return 5 - $this->comment_count;
+                break;
+            case 2:
+                return 10 - $this->comment_count;
+                break;
+            case 3:
+                return 15 - $this->comment_count;
+                break;
+            case 4:
+                return 20 - $this->comment_count;
+                break;
+            case 5:
+                return 'Max Level';
+                break;
+            default:
+                return 'Rank Unknown';
+        }
+    }
 }

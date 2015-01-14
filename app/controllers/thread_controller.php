@@ -24,6 +24,7 @@ class ThreadController extends AppController
     {   
         $thread = new Thread;
         $comment = new Comment;
+        $user = User::get($_SESSION['id']);
         $page = Param::get('page_next', 'create');
 
         switch($page)
@@ -32,7 +33,8 @@ class ThreadController extends AppController
                 break;
             case 'create_end':
                 $thread->title      = Param::get('title');
-                $comment->username  = Param::get('username');
+                $comment->user_id = $user->id;
+                $comment->username  = $user->username;
                 $comment->body      = Param::get('body');
 
                 try {
