@@ -11,6 +11,7 @@
     <input type="email" class="span2" name="email" value="<?php encode_string($user->email) ?>" ><br />
     <br />
     <label><font style="font-size: 20px">Rank</font></label>
+    
    	<font style="font-size: 15px"><?php echo readable_text($user->getRank()) ?></font>
     <br />
    	<label><font style="font-size: 20px">Comment count</font></label>
@@ -19,6 +20,7 @@
     <label><font style="font-size: 20px">Member Since:</font></label>
     <font style="font-size: 15px"><?php echo readable_text($user->created) ?></font>
     <br />
+
     <input type="hidden" name="page_next" value="profile_end">
     <br /><button type="submit" class="btn btn-primary">Save</button>
 </form>
