@@ -18,6 +18,7 @@
         </div>
 
         <?php if($_SESSION['id'] === $value->user_id): ?>
+            <a class="btn btn-info" href="<?php encode_string(url('comment/edit', array('thread_id' => $thread->id, 'comment_id' => $value->id))) ?>">Edit</a>
             <a class="btn btn-danger" href="<?php encode_string(url('comment/delete', array('thread_id' => $thread->id, 'comment_id' => $value->id))) ?>">Delete</a>
         <?php endif ?>
     </div>

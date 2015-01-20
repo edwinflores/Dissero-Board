@@ -68,4 +68,22 @@ class CommentController extends AppController
             $this->render('delete_end');
         }
     }
+
+    public function edit()
+    {
+        $comment = Comment::get(Param::get('comment_id'));
+        $thread = Thread::get(Param::get('thread_id'));
+
+        $this->set(get_defined_vars());
+
+        if (Param::get('edit')) {
+            $comment->body = Param::get('body');
+            try {
+                $comment->edit();
+                redirect_to(url('thread/index'));
+            } catch (ValidationException $e) {
+                $this->render('edit');
+            }
+        }
+    }
 }

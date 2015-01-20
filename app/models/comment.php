@@ -73,5 +73,14 @@
       $db = DB::conn();
       $db->query('DELETE FROM comment WHERE user_id = ?', array($user_id));
     }
+
+    public function edit()
+    {
+      if (!$this->validate()) {
+        throw new ValidationException('Invalid Comment');
+      }
+
+      $db = DB::conn();
+      $db->update('comment', array('body' => $this->body), array('id' => $this->id));
+    }
   }
-?>
