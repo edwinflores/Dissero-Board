@@ -8,7 +8,7 @@ class User extends AppModel
 
     private $is_login_valid = true;
 
-    private $rankEquivalent = array(
+    private static $rankEquivalent = array(
                                 '1' => 'Power',
                                 '2' => 'Virtue',
                                 '3' => 'Dominion',
@@ -143,14 +143,6 @@ class User extends AppModel
         $db->query('DELETE FROM user WHERE id = ?', array($user_id));
     }
 
-    /**
-     * Update user profile
-     */
-    public function updateProfile()
-    {
-
-    }
-
     /** 
      * Called to check if the login is valid or not
      */
@@ -159,11 +151,17 @@ class User extends AppModel
         return $this->is_login_valid;
     }
 
+    /**
+     * Gets the user's rank and converts it to it's string value
+     */
     public function getRank()
     {
-        return $this->rankEquivalent[$this->rank];
+        return self::$rankEquivalent[$this->rank];
     }
 
+    /**
+     * Checks if the user's rank needs to be increased or decreased
+     */
     public function updateRank($count)
     {
         $db = DB::conn();
@@ -182,6 +180,9 @@ class User extends AppModel
         }
     }
 
+    /**
+     * Increments the user's comment count
+     */
     public function addCommentCount()
     {
         $db = DB::conn();
@@ -191,6 +192,9 @@ class User extends AppModel
         $this->updateRank($newCount);
     }
 
+    /**
+     * Decrements the user's comment count
+     */
     public function subtractCommentCount()
     {
         $db = DB::conn();
@@ -200,6 +204,9 @@ class User extends AppModel
         $this->updateRank($newCount);
     }
 
+    /**
+     * Fetches the top users with the highest comment counts
+     */
     public static function getTopTen()
     {
         $db = DB::conn();
@@ -217,6 +224,9 @@ class User extends AppModel
         return $users;
     }
 
+    /**
+     * Computes the remaining number of comments a user needs to rank up
+     */
     public function getRemainingCommentCount()
     {
         if ($this->rank < self::MAX_RANK) {
@@ -225,33 +235,16 @@ class User extends AppModel
             return 'Max Rank';    
         }
     }
-        
+     
+    /**
+     * Fetches a filtered list of users based on rank
+     */   
     public static function filter($filter)
     {
-        /*switch ($filter) {
-            case "Power":
-                $rank = 1;
-                break;
-            case "Virtue":
-                $rank = 2;
-                break;
-            case "Dominion":
-                $rank = 3;
-                break;
-            case "Throne":
-                $rank = 4;
-                break;
-            case "Cherubim":
-                $rank = 5;
-                break;
-            default:
-                $rank = NULL;
-        }*/
-
-        $rank = array_search('$filter', $this->rankEquivalent);
+        $rank = array_search($filter, self::$rankEquivalent);
 
         $db = DB::conn();
-        
+
         if($rank) {
             $rows = $db->rows('SELECT * FROM user WHERE rank = ? ORDER BY comment_count DESC', array($rank));
 

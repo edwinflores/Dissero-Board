@@ -29,9 +29,9 @@
 
 <a class="btn btn-large btn-primary" href="<?php encode_string(url('thread/create')) ?>">Create</a>
 <br /><br />
-<a class="btn btn-large btn-primary" href="<?php encode_string(url('user/profile')) ?>">View Profile</a>
+<a class="btn btn btn-primary" href="<?php encode_string(url('user/profile')) ?>">View Profile</a>
 <br /><br />
-<a class="btn btn-large btn-primary" href="<?php encode_string(url('user/ranking')) ?>">View Top Ten</a>
+<a class="btn btn btn-primary" href="<?php encode_string(url('user/ranking')) ?>">View Top Ten</a>
 <br /><br />
 <a class="btn btn btn-primary" href="<?php encode_string(url('user/userlist')) ?>">View User List</a>
 <br /><br />
