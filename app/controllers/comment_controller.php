@@ -64,7 +64,7 @@ class CommentController extends AppController
         $this->set(get_defined_vars());
 
         if(Param::get('delete')) {
-            $comment->deleteComment($comment);
+            $comment->delete($comment);
             $this->render('delete_end');
         }
     }

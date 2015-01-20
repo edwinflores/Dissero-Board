@@ -17,6 +17,9 @@
    	<label><font style="font-size: 20px">Comment count</font></label>
    	<font style="font-size: 15px"><?php echo readable_text($user->comment_count) ?></font>
     <br />
+    <label><font style="font-size: 20px">Remaining comments until Rank Up</font></label>
+    <font style="font-size: 15px"><?php echo readable_text($nextRank) ?></font>
+    <br />
     <label><font style="font-size: 20px">Member Since:</font></label>
     <font style="font-size: 15px"><?php echo readable_text($user->created) ?></font>
     <br />

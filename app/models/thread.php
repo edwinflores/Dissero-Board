@@ -58,7 +58,8 @@ class Thread extends AppModel
             $db->begin();
             $db->insert('thread', array('title' => $this->title));
             $this->id = $db->lastInsertId();
-            $comment->write($this->id, $comment);
+            $comment->thread_id = $this->id;
+            $comment->write($comment);
             $db->commit();
         } catch (RecordNotFoundException $e) {
             $db->rollback();

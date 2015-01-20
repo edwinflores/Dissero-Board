@@ -2,12 +2,6 @@
     class Comment extends AppModel
     {
       public $validation = array(
-         'username' => array(
-            'length' => array(
-               'validate_between', MIN_USERNAME_CHARACTERS, MAX_USERNAME_CHARACTERS,
-               ),
-            ),
-
          'body' => array(
             'length' => array(
                'validate_between', MIN_BODY_CHARACTERS, MAX_BODY_CHARACTERS,
@@ -65,13 +59,19 @@
       /**
      * Deletes a comment
      */
-    public function deleteComment($comment)
+    public function delete($comment)
     {
-        $db = DB::conn();
-        $db->query('DELETE FROM comment WHERE id = ?', array($comment->id));
+      $db = DB::conn();
+      $db->query('DELETE FROM comment WHERE id = ?', array($comment->id));
 
-        $user = User::get($comment->user_id);
-        $user->subtractCommentCount();
+      $user = User::get($comment->user_id);
+      $user->subtractCommentCount();
     }
-   }
+
+    public function deleteAllByUser($user_id)
+    {
+      $db = DB::conn();
+      $db->query('DELETE FROM comment WHERE user_id = ?', array($user_id));
+    }
+  }
 ?>

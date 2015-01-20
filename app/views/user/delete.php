@@ -3,7 +3,7 @@
     You cannot recover your account once deleted. Are you sure you wish to continue?
 </p>
 
-<form class="well" method="post" action ="<?php encode_string(url('user/delete')) ?>"
+<form class="well" method="post" action ="<?php encode_string(url('user/delete')) ?>">
 	<button type="submit" class="btn btn-danger" value="1" name='delete'>Delete Account</button>
 </form>
 

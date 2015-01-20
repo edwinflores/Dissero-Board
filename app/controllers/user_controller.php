@@ -75,6 +75,7 @@ class UserController extends AppController
     {
         $user = User::get($_SESSION['id']);
         $page = Param::get('page_next', 'profile');
+        $nextRank = $user->getRemainingCommentCount();
 
         switch ($page) {
             case 'profile':
@@ -99,17 +100,30 @@ class UserController extends AppController
     }
 
     /**
-     * Deletes user profile
+     * Deletes user account
      */
     public function delete()
     {
         $user = User::get($_SESSION['id']);
       
         if(Param::get('delete')) {
+            Comment::deleteAllByUser($user->id);       
             $user->deleteAccount($user->id);
+            redirect_to(url('user/login'));
         }
+    }
 
-        redirect_to(url('user/login'));
+    public function ranking()
+    {
+        $current_page = max(Param::get('page'), SimplePagination::MIN_PAGE_NUM);
+        $pagination = new SimplePagination($current_page, MAX_RANKING_DISPLAY);
+        $users = User::getTopTen();
+        $other_users = array_slice($users, $pagination->start_index + SimplePagination::MIN_PAGE_NUM);
+        $pagination->checkLastPage($other_users);
+        $page_links = createPageLinks(count($users), $current_page, $pagination->count);
+        $users = array_slice($users, $pagination->start_index -1, $pagination->count);
+        
+        $this->set(get_defined_vars());
     }
 
     /**
