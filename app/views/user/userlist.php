@@ -44,9 +44,9 @@
         <select name="filter" class="input-medium">
             <option value="" selected disabled>--Rank--</option>
             <option value="Power">Power</option>
+            <option value="Virtue">Virtue</option>
             <option value="Dominion">Dominion</option>
             <option value="Throne">Throne</option>
-            <option value="Cherubim">Cherubim</option>
             <option value="Cherubim">Cherubim</option>
         </select>
     <?php endif ?>

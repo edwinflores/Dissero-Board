@@ -69,7 +69,7 @@ class UserController extends AppController
     }
 
     /**
-     * Updates user profile
+     * Updates and/or displays user profile
      */
     public function profile()
     {
@@ -80,10 +80,9 @@ class UserController extends AppController
         switch ($page) {
             case 'profile':
                 break;
-            case 'profile_end':
+            case 'profile_update':
                 $user->username = Param::get('username');
                 $user->password = Param::get('password');
-                $user->email = Param::get('email');
 
                 try {
                     $user->updateProfile();

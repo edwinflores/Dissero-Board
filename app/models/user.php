@@ -91,6 +91,17 @@ class User extends AppModel
         sendConfirmCode($confirm_code, $this->email);
     }
 
+    public function updateProfile()
+    {
+        $input = array(
+            'username' => $this->username,
+            'password' => encrypt_decrypt("encrypt", $this->password)
+        );
+
+        $db = DB::conn();
+        $db->update('user', $input, array('id' => $this->id));
+    }
+
     /**
      * Verifies login credentials
      */
@@ -166,22 +177,20 @@ class User extends AppModel
     /**
      * Checks if the user's rank needs to be increased or decreased
      */
-    public function updateRank($count)
+    public function updateRank($commentCount)
     {
         $db = DB::conn();
 
-        $numRequired = $this->rank * self::RANKUP_MULTIPLIER;
-        $previousRankReq = ($this->rank-1) * self::RANKUP_MULTIPLIER;
+        $commentRequirement = $this->rank * self::RANKUP_MULTIPLIER;
+        $previousRankRequirement = ($this->rank-1) * self::RANKUP_MULTIPLIER;
 
-        if ($count >= $numRequired && $this->rank < self::MAX_RANK) {
+        if ($commentCount >= $commentRequirement && $this->rank < self::MAX_RANK) {
             $newRank = ++$this->rank;
-            $db->update('user', array('rank' => $newRank), array('id' => $this->id));
+        } else if ($commentCount <= $previousRankRequirement && $this->rank > self::MIN_RANK) {
+            $newRank = --$this->rank;
         }
 
-        if ($count <= $previousRankReq && $this->rank > self::MIN_RANK) {
-            $newRank = --$this->rank;
-            $db->update('user', array('rank' => $newRank), array('id' => $this->id));            
-        }
+        $db->update('user', array('rank' => $newRank), array('id' => $this->id));
     }
 
     /**

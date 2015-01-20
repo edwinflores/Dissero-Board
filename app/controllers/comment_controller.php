@@ -66,6 +66,8 @@ class CommentController extends AppController
         if(Param::get('delete')) {
             $comment->delete($comment);
             $this->render('delete_end');
+            $user = User::get($comment->user_id);
+            $user->subtractCommentCount();
         }
     }
 

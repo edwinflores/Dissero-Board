@@ -63,9 +63,6 @@
     {
       $db = DB::conn();
       $db->query('DELETE FROM comment WHERE id = ?', array($comment->id));
-
-      $user = User::get($comment->user_id);
-      $user->subtractCommentCount();
     }
 
     public function deleteAllByUser($user_id)
