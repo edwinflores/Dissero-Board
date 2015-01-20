@@ -77,14 +77,18 @@ class User extends AppModel
             throw new ValidationException('Email is already registered, use another.');
         }
 
+        $confirm_code = encrypt_decrypt("encrypt", $this->email);
+
         $input = array(
             'username' => $this->username,
             'password' => encrypt_decrypt("encrypt", $this->password),
-            'email' => $this->email
+            'email' => $this->email,
+            'confirm_code' => $confirm_code
         );
 
         $db = DB::conn();
         $db->insert('user', $input);
+        sendConfirmCode($confirm_code, $this->email);
     }
 
     /**
@@ -255,6 +259,23 @@ class User extends AppModel
             return $users;
         } else {
             return self::getAll();
+        }
+    }
+
+    /**
+     * Checks the DB for valid code and confirms the user's email
+     */
+    public static function confirmUser($confirm_code)
+    {
+        $db = DB::conn();
+        $code = strval($confirm_code);
+        $row = $db->row("SELECT * FROM user WHERE confirm_code = ?", array($code));
+
+        if($row) {
+            $db->update('user', array('verified' => 1), array('confirm_code' => $code));
+            return true;
+        } else {
+            return false;
         }
     }
 }

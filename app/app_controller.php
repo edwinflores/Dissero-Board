@@ -8,7 +8,8 @@ class AppController extends Controller
       $exclude = array(
     		'user/register',
     		'user/login',
-            'user/delete');
+            'user/delete',
+            'user/confirmation');
 
     	if (in_array(Param::get(DC_ACTION), $exclude)) {
     		return;

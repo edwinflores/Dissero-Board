@@ -113,6 +113,9 @@ class UserController extends AppController
         }
     }
 
+    /**
+     * Fetch user rankings
+     */
     public function ranking()
     {
         $current_page = max(Param::get('page'), SimplePagination::MIN_PAGE_NUM);
@@ -127,6 +130,19 @@ class UserController extends AppController
     }
 
     /**
+     * Confirms user email
+     */
+    public function confirmation()
+    {
+        $code = Param::get('passkey');
+        $code = urlencode($code);
+        $code = str_replace("+", "%2B", $code);
+        $code = urldecode($code);
+        $confirmed = User::confirmUser($code);
+        $this->set(get_defined_vars());
+    }
+
+    /**
      * Removes the session
      */
     public function logout()
@@ -135,6 +151,9 @@ class UserController extends AppController
         redirect_to(url('user/login'));
     }
 
+    /**
+     * Fetches the filtered User List
+     */
     public function userlist()
     {
         $filter = Param::get('filter');

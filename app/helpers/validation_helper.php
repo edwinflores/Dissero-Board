@@ -34,3 +34,20 @@ function is_logged_in()
 {
     return isset($_SESSION['username']);
 }
+
+function sendConfirmCode($confirm_code, $email)
+{
+    $receiver = $email;
+    $subject = "Thy Confirmation Code";
+    $from = "From: Mark Fischbach <markiplier@freddyfazzbears.com>";
+
+    $message="Your Confirmation link \r\n";
+    $message.="Click on this link to activate your account \r\n";
+    $message.="10.3.10.42/user/confirmation?passkey=$confirm_code";
+
+    $sentmail = mail($receiver, $subject, $message, $from);
+
+    if(!$sentmail) {
+        echo "Error!";
+    }
+}

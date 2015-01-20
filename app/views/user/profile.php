@@ -2,14 +2,20 @@
 
 <form class="well" method="post" action="<?php encode_string(url('user/profile')) ?>">
 	<label><font style="font-size: 20px">Username:</font></label>
-    <input type="text" class="span2" name="username" value="<?php encode_string($user->username) ?>" ><br />
+    <input type="text" class="span3" name="username" value="<?php encode_string($user->username) ?>" ><br />
     <br />
     <label><font style="font-size: 20px">Password:</font></label>
-    <input type="password" class="span2" name="password" value="<?php encode_string(encrypt_decrypt('decrypt', $user->password))?>" ><br />
+    <input type="password" class="span3" name="password" value="<?php encode_string(encrypt_decrypt('decrypt', $user->password))?>" ><br />
     <br />
     <label><font style="font-size: 20px">Email Address:</font></label>
-    <input type="email" class="span2" name="email" value="<?php encode_string($user->email) ?>" ><br />
-    <br />
+    <input type="email" class="span3" name="email" value="<?php encode_string($user->email) ?>" ><br />
+    <label><font style="font-size: 18px">Verified: </font></label>
+        <?php if ($user->verified): ?>
+            Yes
+        <?php else : ?>
+            No
+        <?php endif ?>
+    <br><br>
     <label><font style="font-size: 20px">Rank</font></label>
     
    	<font style="font-size: 15px"><?php echo readable_text($user->getRank()) ?></font>
