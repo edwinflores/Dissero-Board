@@ -1,4 +1,4 @@
-<h2><font style="font-size: 30px">Warning!</font></h2>
+<h2><font style="font-size: 30px"> (✖﹏✖) Warning!</font></h2>
 
 <form method="POST" class="alert alert-danger">
 	This will permanently delete your comment. Are you sure you wish to continue?

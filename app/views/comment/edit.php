@@ -17,12 +17,12 @@
 </div>
 
 <form class="well" method="POST">
-    <label>Edit Comment:</label>
+    <label><font style="font-size: 20px">Edit Comment:</font></label>
     <br>
     <textarea name="body" style="width:30%" rows=6 required><?php encode_string($comment->body) ?></textarea>
     <br>
     <button type="submit" name="edit" value="save" class="btn btn-info">Save Changes</button>
     <br><br>
-    <a class="btn btn-primary" href="<?php encode_string(url('thread/view', array('thread_id' => $thread->id)))?>">Cancel</a>
+    <a class="btn btn-primary" href="<?php encode_string(url('comment/view', array('thread_id' => $thread->id)))?>">Cancel</a>
 
 </form>

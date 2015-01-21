@@ -1,4 +1,4 @@
-<h1>Create a thread</h1>
+<h1>(ง •̀_•́)ง Create a thread</h1>
 
 <?php if ($thread->hasError() || $comment->hasError()): ?>
     <div class="alert alert-block">

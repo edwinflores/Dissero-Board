@@ -9,25 +9,25 @@ function validate_between($check, $min, $max)
 
 function  encrypt_decrypt($action, $string)
 {
-	$key = 'Ven muerte tan escondida';
+    $key = 'Ven muerte tan escondida';
 
-	$iv = md5(md5($key));
+    $iv = md5(md5($key));
 
-	if ($action == 'encrypt') {
-		$output = mcrypt_encrypt(MCRYPT_RIJNDAEL_256, md5($key), $string, MCRYPT_MODE_CBC, $iv);
-		$output = base64_encode($output);
-	}
+    if ($action == 'encrypt') {
+        $output = mcrypt_encrypt(MCRYPT_RIJNDAEL_256, md5($key), $string, MCRYPT_MODE_CBC, $iv);
+        $output = base64_encode($output);
+    }
 
-	else if ($action == 'decrypt') {
-		$output = mcrypt_decrypt(MCRYPT_RIJNDAEL_256, md5($key), base64_decode($string), MCRYPT_MODE_CBC, $iv);
-		$output = rtrim($output, "\0");
-	}
+    else if ($action == 'decrypt') {
+        $output = mcrypt_decrypt(MCRYPT_RIJNDAEL_256, md5($key), base64_decode($string), MCRYPT_MODE_CBC, $iv);
+        $output = rtrim($output, "\0");
+    }
 
-	else {
-		$output = NULL;
-	}
+    else {
+        $output = NULL;
+    }
 
-	return $output;
+    return $output;
 }
 
 function is_logged_in()
@@ -39,7 +39,7 @@ function sendConfirmCode($confirm_code, $email)
 {
     $receiver = $email;
     $subject = "Thy Confirmation Code";
-    $from = "From: Mark Fischbach <markiplier@freddyfazzbears.com>";
+    $from = "From: Con Firmer <confirmer@disseroboard.com>";
 
     $message="Your Confirmation link \r\n";
     $message.="Click on this link to activate your account \r\n";

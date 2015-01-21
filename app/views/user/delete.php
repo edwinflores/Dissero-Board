@@ -1,4 +1,4 @@
-<h2><font style="font-size: 30px">Warning!</font></h2>
+<h2><font style="font-size: 30px">( ✖ ︿ ✖ ) Warning!</font></h2>
 <p class='alert alert-block'>
     You cannot recover your account once deleted. Are you sure you wish to continue?
 </p>

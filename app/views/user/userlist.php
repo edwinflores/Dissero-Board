@@ -1,4 +1,5 @@
-<h1><font style="font-size: 50px">The User List!</font></h1>
+<h2><font style="font-size: 30px">ヾ(⌐■_■)ノ♪</font></h2>
+<h1><font style="font-size: 45px">The User List!</font></h1>
 <form class="form-search" method="GET">
     <?php if ($filter == 'Power'): ?>
     	<select name="filter" class="input-medium">
@@ -50,9 +51,9 @@
             <option value="Cherubim">Cherubim</option>
         </select>
     <?php endif ?>
-    <button type="submit" class="btn">Filter</button>
+    <button type="submit" class="btn btn-info">Filter</button>
 </form>
-
+<hr width="75%" align="center" size="6" noshade>
 <ul type="square">
     <?php foreach ($users as $key => $value): ?>
         <div class="user"><li>

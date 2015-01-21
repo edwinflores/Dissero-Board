@@ -91,6 +91,9 @@ class User extends AppModel
         sendConfirmCode($confirm_code, $this->email);
     }
 
+    /**
+     * Update the user's profile
+     */
     public function updateProfile()
     {
         $input = array(
