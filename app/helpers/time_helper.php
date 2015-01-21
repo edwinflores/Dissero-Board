@@ -11,7 +11,7 @@ function time_ago($subjectTime)
 	$deltaTime = time() - strtotime($subjectTime);
 
 	if ($deltaTime < 1) {
-		return '0 seconds';
+		return 'Just now.';
 	}
 
 	$secondConversion = array(YEAR_SECOND => 'year',
@@ -27,7 +27,7 @@ function time_ago($subjectTime)
 		if ($difference >= 1) {
 			$result = round($difference);
 			$output = $result . ' ' . $str . ($result > 1 ? 's' : '') . " ago";
-			return  $output;
+			return $output;	
 		}
 	}
 }

@@ -183,11 +183,13 @@ class User extends AppModel
 
         $commentRequirement = $this->rank * self::RANKUP_MULTIPLIER;
         $previousRankRequirement = ($this->rank-1) * self::RANKUP_MULTIPLIER;
-
+        $newRank = $this->rank;
         if ($commentCount >= $commentRequirement && $this->rank < self::MAX_RANK) {
-            $newRank = ++$this->rank;
-        } else if ($commentCount <= $previousRankRequirement && $this->rank > self::MIN_RANK) {
-            $newRank = --$this->rank;
+            $newRank = ++$newRank;
+        } 
+
+        if ($commentCount <= $previousRankRequirement && $this->rank > self::MIN_RANK) {
+            $newRank = --$newRank;
         }
 
         $db->update('user', array('rank' => $newRank), array('id' => $this->id));
@@ -283,8 +285,7 @@ class User extends AppModel
         if($row) {
             $db->update('user', array('verified' => 1), array('confirm_code' => $code));
             return true;
-        } else {
-            return false;
         }
+        return false;
     }
 }
