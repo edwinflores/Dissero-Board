@@ -7,6 +7,10 @@ class UserController extends AppController
      */
     public function register()
     {
+        if(is_logged_in()) {
+            redirect_to(url('thread/index'));
+        }
+
         $user = new User;
         $page = Param::get('page_next', 'register');
 
@@ -39,6 +43,10 @@ class UserController extends AppController
      */
     public function login()
     {
+        if(is_logged_in()) {
+            redirect_to(url('thread/index'));
+        }
+
         $user = new User;
         $page = Param::get('page_next', 'login');
 
@@ -81,11 +89,11 @@ class UserController extends AppController
             case 'profile':
                 break;
             case 'profile_update':
-                $user->username = Param::get('username');
-                $user->password = Param::get('password');
+                $new_username = Param::get('username');
+                $new_password = Param::get('password');
 
                 try {
-                    $user->updateProfile();
+                    $user->updateProfile($new_username, $new_password);
                 } catch (ValidationException $e) {
                     $page = 'profile';
                 }

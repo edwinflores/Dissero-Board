@@ -8,7 +8,7 @@ class User extends AppModel
 
     private $is_login_valid = true;
 
-    private static $rankEquivalent = array(
+    private static $rank_equivalent = array(
                                 '1' => 'Power',
                                 '2' => 'Virtue',
                                 '3' => 'Dominion',
@@ -18,6 +18,8 @@ class User extends AppModel
     public $validation = array(
             'username' => array(
                 'duplicate' => array('isUsernameRegistered'
+                ),
+                'format' => array('is_valid_format'
                 ),
                 'length' => array(
                     'validate_between', MIN_USERNAME_CHARACTERS, MAX_USERNAME_CHARACTERS,
@@ -94,15 +96,29 @@ class User extends AppModel
     /**
      * Update the user's profile
      */
-    public function updateProfile()
+    public function updateProfile($new_username, $new_password)
     {
-        $input = array(
-            'username' => $this->username,
-            'password' => encrypt_decrypt("encrypt", $this->password)
-        );
+        $input = array();
 
-        $db = DB::conn();
-        $db->update('user', $input, array('id' => $this->id));
+        if (!is_valid_username($new_username) || !is_valid_password($new_password)) {
+            throw new ValidationException('Invalid username or password input');
+        }
+
+        if ($new_username != $this->username) {
+            $this->username = $new_username;
+            $input['username'] = $this->username;
+        }
+
+        if ($new_password != encrypt_decrypt("decrypt", $this->password)) {
+            $this->password = $new_password;
+            $input['password'] = encrypt_decrypt("encrypt", $this->password);
+        }
+
+        if (!empty($input))
+        {
+            $db = DB::conn();
+            $db->update('user', $input, array('id' => $this->id));
+        }
     }
 
     /**
@@ -174,7 +190,7 @@ class User extends AppModel
      */
     public function getRank()
     {
-        return self::$rankEquivalent[$this->rank];
+        return self::$rank_equivalent[$this->rank];
     }
 
     /**
@@ -259,7 +275,7 @@ class User extends AppModel
      */   
     public static function filter($filter)
     {
-        $rank = array_search($filter, self::$rankEquivalent);
+        $rank = array_search($filter, self::$rank_equivalent);
 
         $db = DB::conn();
 

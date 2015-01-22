@@ -15,7 +15,7 @@
 
         <div>
             <font style="font-size: 18px">
-            <?php echo "> " . wordwrap(readable_text($value->body), 5); ?>
+            <?php echo "> " . readable_text($value->body); ?>
             </font>
         </div>
         <br>

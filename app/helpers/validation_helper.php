@@ -7,6 +7,11 @@ function validate_between($check, $min, $max)
     return $min <= $n && $n <= $max;
 }
 
+function is_valid_format($string)
+{
+    return !(preg_match('/[^a-zA-Z0-9_]/', $string));
+}
+
 function  encrypt_decrypt($action, $string)
 {
     $key = 'Ven muerte tan escondida';
@@ -33,6 +38,17 @@ function  encrypt_decrypt($action, $string)
 function is_logged_in()
 {
     return isset($_SESSION['username']);
+}
+
+function is_valid_username($username)
+{
+    return (validate_between($username, MIN_USERNAME_CHARACTERS, MAX_USERNAME_CHARACTERS) 
+                        && is_valid_format($username));
+}
+
+function is_valid_password($password)
+{
+    return validate_between($password, MIN_PASSWORD_CHARACTERS, MAX_PASSWORD_CHARACTERS);
 }
 
 function sendConfirmCode($confirm_code, $email)

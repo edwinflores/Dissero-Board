@@ -10,10 +10,11 @@
 <ul type="circle" compact>
     <?php foreach ($threads as $row): ?>
     <li>
-        <font style="font-size: 18px">
+        <font style="font-size: 18px"><b>
         <a href="<?php encode_string(url('comment/view', array('thread_id' => $row->id))) ?>">
-        <?php encode_string($row->title) ?></a>
-        </font>
+        <?php encode_string($row->title) ?></b></a></font><br>
+        <font style="font-size: 14px">
+        <i>Posted: </i><?php encode_string(time_ago($row->created)) ?></font>
     </li>
     <br />
     <?php endforeach ?>

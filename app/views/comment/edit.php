@@ -24,5 +24,4 @@
     <button type="submit" name="edit" value="save" class="btn btn-info">Save Changes</button>
     <br><br>
     <a class="btn btn-primary" href="<?php encode_string(url('comment/view', array('thread_id' => $thread->id)))?>">Cancel</a>
-
 </form>

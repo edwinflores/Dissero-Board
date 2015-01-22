@@ -18,9 +18,10 @@
 
 <form class="well" method="post" action="<?php encode_string(url('thread/write')) ?>">
     <label>Comment</label>
-    <textarea name="body"><?php encode_string(Param::get('body')) ?></textarea>
+    <textarea style="width:40%" rows=6 name="body"><?php encode_string(Param::get('body')) ?></textarea>
     <br />
     <input type="hidden" name="thread_id" value="<?php encode_string($thread->id) ?>">
     <input type="hidden" name="page_next" value="write_end">
     <button type="submit" class="btn btn-primary">Submit</button>
+    <a class="btn btn-primary" href="<?php encode_string(url('comment/view', array('thread_id' => $thread->id)))?>">Cancel</a>
 </form>
