@@ -3,6 +3,7 @@
 const MINUTE_SECOND = 60;
 const HOUR_SECOND = 3600;
 const DAY_SECOND = 86400;
+const WEEK_SECOND = 604800;
 const MONTH_SECOND = 2592000;
 const YEAR_SECOND = 31104000;
 
@@ -16,6 +17,7 @@ function time_ago($subjectTime)
 
     $secondConversion = array(YEAR_SECOND => 'year',
                     MONTH_SECOND => 'month',
+                    WEEK_SECOND => 'week',
                     DAY_SECOND => 'day',
                     HOUR_SECOND => 'hour',
                     MINUTE_SECOND => 'minute',

@@ -180,22 +180,22 @@ class User extends AppModel
     /**
      * Checks if the user's rank needs to be increased or decreased
      */
-    public function updateRank($commentCount)
+    public function updateRank($comment_count)
     {
         $db = DB::conn();
 
-        $commentRequirement = $this->rank * self::RANKUP_MULTIPLIER;
-        $previousRankRequirement = ($this->rank-1) * self::RANKUP_MULTIPLIER;
-        $newRank = $this->rank;
-        if ($commentCount >= $commentRequirement && $this->rank < self::MAX_RANK) {
-            $newRank = ++$newRank;
+        $comment_requirement = $this->rank * self::RANKUP_MULTIPLIER;
+        $previous_rank_requirement = ($this->rank-1) * self::RANKUP_MULTIPLIER;
+        $new_rank = $this->rank;
+        if ($comment_count >= $comment_requirement && $this->rank < self::MAX_RANK) {
+            $new_rank = ++$new_rank;
         } 
 
-        if ($commentCount <= $previousRankRequirement && $this->rank > self::MIN_RANK) {
-            $newRank = --$newRank;
+        if ($comment_count <= $previous_rank_requirement && $this->rank > self::MIN_RANK) {
+            $new_rank = --$new_rank;
         }
 
-        $db->update('user', array('rank' => $newRank), array('id' => $this->id));
+        $db->update('user', array('rank' => $new_rank), array('id' => $this->id));
     }
 
     /**
@@ -204,10 +204,10 @@ class User extends AppModel
     public function addCommentCount()
     {
         $db = DB::conn();
-        $currentCount = $db->value('SELECT comment_count FROM user WHERE id = ?', array($this->id));
-        $newCount = ++$currentCount;
-        $db->update('user', array('comment_count' => $newCount), array('id' => $this->id));
-        $this->updateRank($newCount);
+        $current_count = $db->value('SELECT comment_count FROM user WHERE id = ?', array($this->id));
+        $new_count = ++$current_count;
+        $db->update('user', array('comment_count' => $new_count), array('id' => $this->id));
+        $this->updateRank($new_count);
     }
 
     /**
@@ -216,10 +216,10 @@ class User extends AppModel
     public function subtractCommentCount()
     {
         $db = DB::conn();
-        $currentCount = $db->value('SELECT comment_count FROM user WHERE id = ?', array($this->id));
-        $newCount = --$currentCount;
-        $db->update('user', array('comment_count' => $newCount), array('id' => $this->id));
-        $this->updateRank($newCount);
+        $current_count = $db->value('SELECT comment_count FROM user WHERE id = ?', array($this->id));
+        $new_count = --$current_count;
+        $db->update('user', array('comment_count' => $new_count), array('id' => $this->id));
+        $this->updateRank($new_count);
     }
 
     /**
@@ -230,11 +230,11 @@ class User extends AppModel
         $db = DB::conn();
         $limit = TOP_LIMIT;
         $query = "SELECT DISTINCT comment_count FROM user ORDER BY comment_count DESC LIMIT {$limit}";
-        $topCommenters = $db->rows($query);
+        $top_commenters = $db->rows($query);
         $users = array();
-        foreach ($topCommenters as $topRow) {
-            $topusers = new self($topRow);
-            $rows = $db->rows('SELECT * FROM user WHERE comment_count = ?', array($topusers->comment_count));
+        foreach ($top_commenters as $top_row) {
+            $top_users = new self($top_row);
+            $rows = $db->rows('SELECT * FROM user WHERE comment_count = ?', array($top_users->comment_count));
             foreach ($rows as $row) {
                 $users[] = new self($row);
             }
