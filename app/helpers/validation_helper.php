@@ -18,18 +18,14 @@ function  encrypt_decrypt($action, $string)
 
     $iv = md5(md5($key));
 
+    $output = NULL;
+
     if ($action == 'encrypt') {
         $output = mcrypt_encrypt(MCRYPT_RIJNDAEL_256, md5($key), $string, MCRYPT_MODE_CBC, $iv);
         $output = base64_encode($output);
-    }
-
-    else if ($action == 'decrypt') {
+    } else if ($action == 'decrypt') {
         $output = mcrypt_decrypt(MCRYPT_RIJNDAEL_256, md5($key), base64_decode($string), MCRYPT_MODE_CBC, $iv);
         $output = rtrim($output, "\0");
-    }
-
-    else {
-        $output = NULL;
     }
 
     return $output;

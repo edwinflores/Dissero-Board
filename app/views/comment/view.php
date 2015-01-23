@@ -8,8 +8,8 @@
         <div class="meta">
             <font style="font-size: 18px"><?php encode_string($key + 1) ?>: 
             <font style="font-size: 20px"><u><?php encode_string($value->username) ?></u><br /> 
-            <font style="font-size: 18px"><b>Rank : </b><i><?php encode_string(User::get($value->user_id)->getRank()) ?></i><br />
-            <font style="font-size: 15px"><b>Posted : </b><?php encode_string(time_ago($value->created)) ?>
+            <font style="font-size: 18px"><strong>Rank : </strong><i><?php encode_string(User::get($value->user_id)->getRank()) ?></i><br />
+            <font style="font-size: 15px"><strong>Posted : </strong><?php encode_string(time_ago($value->created)) ?>
             </font>
         </div>
 
