@@ -8,7 +8,8 @@ class User extends AppModel
     const MIN_RANK = 1;
 
     //Top Ten related
-    const TOP_LIMIT = 10;
+    const MAX_TOP_LIMIT = 10;
+    const MIN_TOP_LIMIT = 1;
 
     private $is_login_valid = true;
 
@@ -200,18 +201,18 @@ class User extends AppModel
     /**
      * Checks if the user's rank needs to be increased or decreased
      */
-    public function updateRank($comment_count)
+    public function updateRank()
     {
         $db = DB::conn();
 
         $comment_requirement = $this->rank * self::RANKUP_MULTIPLIER;
         $previous_rank_requirement = ($this->rank-1) * self::RANKUP_MULTIPLIER;
         $new_rank = $this->rank;
-        if ($comment_count >= $comment_requirement && $this->rank < self::MAX_RANK) {
+        if ($this->getCommentCount() >= $comment_requirement && $this->rank < self::MAX_RANK) {
             $new_rank = ++$new_rank;
         } 
 
-        if ($comment_count <= $previous_rank_requirement && $this->rank > self::MIN_RANK) {
+        if ($this->getCommentCount() <= $previous_rank_requirement && $this->rank > self::MIN_RANK) {
             $new_rank = --$new_rank;
         }
 
@@ -219,46 +220,30 @@ class User extends AppModel
     }
 
     /**
-     * Increments the user's comment count
-     */
-    public function addCommentCount()
-    {
-        $db = DB::conn();
-        $current_count = $db->value('SELECT comment_count FROM user WHERE id = ?', array($this->id));
-        $new_count = ++$current_count;
-        $db->update('user', array('comment_count' => $new_count), array('id' => $this->id));
-        $this->updateRank($new_count);
-    }
-
-    /**
-     * Decrements the user's comment count
-     */
-    public function subtractCommentCount()
-    {
-        $db = DB::conn();
-        $current_count = $db->value('SELECT comment_count FROM user WHERE id = ?', array($this->id));
-        $new_count = --$current_count;
-        $db->update('user', array('comment_count' => $new_count), array('id' => $this->id));
-        $this->updateRank($new_count);
-    }
-
-    /**
      * Fetches the top users with the highest comment counts
      */
     public static function getTopTen()
     {
-        $db = DB::conn();
-        $query = "SELECT DISTINCT comment_count FROM user ORDER BY comment_count DESC LIMIT " . self::TOP_LIMIT;
-        $top_commenters = $db->rows($query);
-        $users = array();
-        foreach ($top_commenters as $top_row) {
-            $top_users = new self($top_row);
-            $rows = $db->rows('SELECT * FROM user WHERE comment_count = ?', array($top_users->comment_count));
-            foreach ($rows as $row) {
-                $users[] = new self($row);
+        $top_comment_count = array();
+        $top_users = array();
+        $users = self::getAll();
+
+        foreach ($users as $user) {
+            if (!array_search($user->getCommentCount(), $top_comment_count)) {
+                $top_comment_count[] = $user->getCommentCount();
             }
         }
-        return $users;
+        rsort($top_comment_count);
+        $top_comment_count = array_slice($top_comment_count, self::MIN_TOP_LIMIT - 1, self::MAX_TOP_LIMIT);
+
+        for ($i = 0; $i < count($top_comment_count); $i++) {
+            foreach ($users as $user) {
+                if ($user->getCommentCount() == $top_comment_count[$i]) {
+                    $top_users[] = $user;
+                }
+            }
+        }
+        return $top_users;
     }
 
     /**
@@ -267,7 +252,7 @@ class User extends AppModel
     public function getRemainingCommentCount()
     {
         if ($this->rank < self::MAX_RANK) {
-            return ($this->rank * self::RANKUP_MULTIPLIER) - $this->comment_count;
+            return ($this->rank * self::RANKUP_MULTIPLIER) - $this->getCommentCount();
         } else {
             return 'Max Rank';    
         }
@@ -309,5 +294,12 @@ class User extends AppModel
             return true;
         }
         return false;
+    }
+
+    public function getCommentCount()
+    {
+        $db = DB::conn();
+        $comment_count = count($db->rows('SELECT id FROM comment WHERE user_id = ?', array($this->id)));
+        return $comment_count;
     }
 }

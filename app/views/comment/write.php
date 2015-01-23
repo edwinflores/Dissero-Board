@@ -16,7 +16,7 @@
 </div>
 <?php endif ?>
 
-<form class="well" method="post" action="<?php encode_string(url('thread/write')) ?>">
+<form class="well" method="post" action="<?php encode_string(url('comment/write')) ?>">
     <label>Comment</label>
     <textarea style="width:40%" rows=6 name="body"><?php encode_string(Param::get('body')) ?></textarea>
     <br />

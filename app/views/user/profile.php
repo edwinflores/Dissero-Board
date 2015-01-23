@@ -40,7 +40,8 @@
 <?php endif ?>
 
 <form class="well" method="post" action="<?php encode_string(url('user/profile')) ?>">
-	<label><font style="font-size: 20px">Username:</font></label>
+	<label><font style="font-size: 20px"><?php encode_string($comment_count) ?></font></label>
+    <label><font style="font-size: 20px">Username:</font></label>
     <input type="text" class="span3" name="username" value="<?php encode_string($user->username) ?>" required><br><br>
     <label><font style="font-size: 20px">Password:</font></label>
     <input type="password" class="span3" name="password" value="<?php encode_string(encrypt_decrypt('decrypt', $user->password))?>" required><br><br>
@@ -61,7 +62,7 @@
    	<font style="font-size: 15px"><?php echo readable_text($user->getRank()) ?></font>
     <br><br>
    	<label><font style="font-size: 20px">Number of Comments:</font></label>
-   	<font style="font-size: 15px"><?php echo readable_text($user->comment_count) ?></font>
+   	<font style="font-size: 15px"><?php echo readable_text($comment_count) ?></font>
     <br><br>
     <label><font style="font-size: 20px">Remaining comments until Rank Up:</font></label>
     <font style="font-size: 15px"><?php echo readable_text($nextRank) ?></font>

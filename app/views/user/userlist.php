@@ -59,8 +59,8 @@
         <div class="user"><li>
             <div class="meta">
                 <font style="font-size: 20px"><u><?php encode_string($value->username) ?></u><br /> 
-                <font style="font-size: 18px"><strong>Rank : </strong><?php encode_string(User::get($value->id)->getRank()) ?><br />
-                <font style="font-size: 20px"><strong>Comments : </strong><?php encode_string($value->comment_count) ?>
+                <font style="font-size: 18px"><b>Rank : </b><?php encode_string(User::get($value->id)->getRank()) ?><br />
+                <font style="font-size: 20px"><b>Comments : </b><?php encode_string($value->getCommentCount()) ?>
                 </font>
             </div>
         </div>

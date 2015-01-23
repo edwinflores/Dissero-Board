@@ -86,6 +86,7 @@ class UserController extends AppController
         $user = User::get($_SESSION['id']);
         $page = Param::get('page_next', 'profile');
         $nextRank = $user->getRemainingCommentCount();
+        $comment_count = $user->getCommentCount();
 
         switch ($page) {
             case 'profile':
@@ -134,7 +135,7 @@ class UserController extends AppController
         $pagination->checkLastPage($other_users);
         $page_links = createPageLinks(count($users), $current_page, $pagination->count);
         $users = array_slice($users, $pagination->start_index -1, $pagination->count);
-        
+
         $this->set(get_defined_vars());
     }
 
@@ -161,7 +162,7 @@ class UserController extends AppController
     }
 
     /**
-     * Fetches the filtered User List
+     * Fetches the filtered User Lists
      */
     public function userlist()
     {
