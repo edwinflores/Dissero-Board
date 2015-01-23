@@ -86,6 +86,7 @@ class UserController extends AppController
         $user = User::get($_SESSION['id']);
         $page = Param::get('page_next', 'profile');
         $nextRank = $user->getRemainingCommentCount();
+        $comment_count = $user->getCommentCount();
 
         switch ($page) {
             case 'profile':
@@ -161,7 +162,7 @@ class UserController extends AppController
     }
 
     /**
-     * Fetches the filtered User List
+     * Fetches the filtered User Lists
      */
     public function userlist()
     {

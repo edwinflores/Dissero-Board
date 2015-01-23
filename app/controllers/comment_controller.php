@@ -40,7 +40,7 @@ class CommentController extends AppController
 
                 try {
                     $comment->write($comment);
-                    $user->addCommentCount();
+                    $user->updateRank();
                 } catch (ValidationException $e) {
                     $page = 'write';
                 }
@@ -67,7 +67,7 @@ class CommentController extends AppController
             $comment->delete($comment);
             $this->render('delete_end');
             $user = User::get($comment->user_id);
-            $user->subtractCommentCount();
+            $user->updateRank();
         }
     }
 

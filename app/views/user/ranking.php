@@ -8,7 +8,7 @@
     		<div class="meta">
                 <font style="font-size: 18px"><u><?php encode_string($value->username) ?></u><br /> 
                 <font style="font-size: 16px"><b>Rank : </b><?php encode_string(User::get($value->id)->getRank()) ?><br />
-                <font style="font-size: 18px"><b>Comments : </b><?php encode_string($value->comment_count) ?>
+                <font style="font-size: 18px"><b>Comments : </b><?php encode_string($value->getCommentCount()) ?>
                 </font>
             </div>
     	</div>

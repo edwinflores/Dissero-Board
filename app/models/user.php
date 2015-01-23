@@ -200,18 +200,18 @@ class User extends AppModel
     /**
      * Checks if the user's rank needs to be increased or decreased
      */
-    public function updateRank($comment_count)
+    public function updateRank()
     {
         $db = DB::conn();
 
         $comment_requirement = $this->rank * self::RANKUP_MULTIPLIER;
         $previous_rank_requirement = ($this->rank-1) * self::RANKUP_MULTIPLIER;
         $new_rank = $this->rank;
-        if ($comment_count >= $comment_requirement && $this->rank < self::MAX_RANK) {
+        if ($this->getCommentCount() >= $comment_requirement && $this->rank < self::MAX_RANK) {
             $new_rank = ++$new_rank;
         } 
 
-        if ($comment_count <= $previous_rank_requirement && $this->rank > self::MIN_RANK) {
+        if ($this->getCommentCount() <= $previous_rank_requirement && $this->rank > self::MIN_RANK) {
             $new_rank = --$new_rank;
         }
 
@@ -247,7 +247,7 @@ class User extends AppModel
      */
     public static function getTopTen()
     {
-        $db = DB::conn();
+        /*$db = DB::conn();
         $query = "SELECT DISTINCT comment_count FROM user ORDER BY comment_count DESC LIMIT " . self::TOP_LIMIT;
         $top_commenters = $db->rows($query);
         $users = array();
@@ -258,7 +258,19 @@ class User extends AppModel
                 $users[] = new self($row);
             }
         }
-        return $users;
+        return $users;*/
+
+        //$thread_rows = $db->rows("SELECT $comment_counts as comment_count FROM thread
+        //    order by comment_count ORDERY BY comment_count DESC LIMIT 10;")
+
+        $db = DB::conn();
+        $query = "SELECT DISTINCT $comment_counts as comment_count FROM user ORDER BY comment_count DESC LIMIT " . self::TOP_LIMIT;
+        $top_commenters = $db->rows($query);
+        $users = array();
+        foreach ($top_commenters as $top_row) {
+            $top_users = new self($top_row);
+            $rows = $db->rows('SELECT * FROM user');
+        }
     }
 
     /**
@@ -267,7 +279,7 @@ class User extends AppModel
     public function getRemainingCommentCount()
     {
         if ($this->rank < self::MAX_RANK) {
-            return ($this->rank * self::RANKUP_MULTIPLIER) - $this->comment_count;
+            return ($this->rank * self::RANKUP_MULTIPLIER) - $this->getCommentCount();
         } else {
             return 'Max Rank';    
         }
@@ -309,5 +321,12 @@ class User extends AppModel
             return true;
         }
         return false;
+    }
+
+    public function getCommentCount()
+    {
+        $db = DB::conn();
+        $comment_count = count($db->rows('SELECT id FROM comment WHERE user_id = ?', array($this->id)));
+        return $comment_count;
     }
 }
