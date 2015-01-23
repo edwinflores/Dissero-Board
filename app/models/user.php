@@ -8,7 +8,8 @@ class User extends AppModel
     const MIN_RANK = 1;
 
     //Top Ten related
-    const TOP_LIMIT = 10;
+    const MAX_TOP_LIMIT = 10;
+    const MIN_TOP_LIMIT = 1;
 
     private $is_login_valid = true;
 
@@ -219,58 +220,30 @@ class User extends AppModel
     }
 
     /**
-     * Increments the user's comment count
-     */
-    public function addCommentCount()
-    {
-        $db = DB::conn();
-        $current_count = $db->value('SELECT comment_count FROM user WHERE id = ?', array($this->id));
-        $new_count = ++$current_count;
-        $db->update('user', array('comment_count' => $new_count), array('id' => $this->id));
-        $this->updateRank($new_count);
-    }
-
-    /**
-     * Decrements the user's comment count
-     */
-    public function subtractCommentCount()
-    {
-        $db = DB::conn();
-        $current_count = $db->value('SELECT comment_count FROM user WHERE id = ?', array($this->id));
-        $new_count = --$current_count;
-        $db->update('user', array('comment_count' => $new_count), array('id' => $this->id));
-        $this->updateRank($new_count);
-    }
-
-    /**
      * Fetches the top users with the highest comment counts
      */
     public static function getTopTen()
     {
-        /*$db = DB::conn();
-        $query = "SELECT DISTINCT comment_count FROM user ORDER BY comment_count DESC LIMIT " . self::TOP_LIMIT;
-        $top_commenters = $db->rows($query);
-        $users = array();
-        foreach ($top_commenters as $top_row) {
-            $top_users = new self($top_row);
-            $rows = $db->rows('SELECT * FROM user WHERE comment_count = ?', array($top_users->comment_count));
-            foreach ($rows as $row) {
-                $users[] = new self($row);
+        $top_comment_count = array();
+        $top_users = array();
+        $users = self::getAll();
+
+        foreach ($users as $user) {
+            if (!array_search($user->getCommentCount(), $top_comment_count)) {
+                $top_comment_count[] = $user->getCommentCount();
             }
         }
-        return $users;*/
+        rsort($top_comment_count);
+        $top_comment_count = array_slice($top_comment_count, self::MIN_TOP_LIMIT - 1, self::MAX_TOP_LIMIT);
 
-        //$thread_rows = $db->rows("SELECT $comment_counts as comment_count FROM thread
-        //    order by comment_count ORDERY BY comment_count DESC LIMIT 10;")
-
-        $db = DB::conn();
-        $query = "SELECT DISTINCT $comment_counts as comment_count FROM user ORDER BY comment_count DESC LIMIT " . self::TOP_LIMIT;
-        $top_commenters = $db->rows($query);
-        $users = array();
-        foreach ($top_commenters as $top_row) {
-            $top_users = new self($top_row);
-            $rows = $db->rows('SELECT * FROM user');
+        for ($i = 0; $i < count($top_comment_count); $i++) {
+            foreach ($users as $user) {
+                if ($user->getCommentCount() == $top_comment_count[$i]) {
+                    $top_users[] = $user;
+                }
+            }
         }
+        return $top_users;
     }
 
     /**

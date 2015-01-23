@@ -1,7 +1,6 @@
 <hr width="75%" align="center" size="8" noshade>
 <h1 align="left">(•̀ᴗ•́)و ̑̑ Top Commenters!</h1>
 <hr width="75%" align="center" size="8" noshade>
-
 <ul type="square">
     <?php foreach ($users as $key => $value): ?>
     	<div class="user"><li>

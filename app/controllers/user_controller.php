@@ -135,7 +135,7 @@ class UserController extends AppController
         $pagination->checkLastPage($other_users);
         $page_links = createPageLinks(count($users), $current_page, $pagination->count);
         $users = array_slice($users, $pagination->start_index -1, $pagination->count);
-        
+
         $this->set(get_defined_vars());
     }
 
