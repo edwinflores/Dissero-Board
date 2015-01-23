@@ -12,6 +12,14 @@ function is_valid_format($string)
     return !(preg_match('/[^a-zA-Z0-9_]/', $string));
 }
 
+function check_whitespace($string)
+{
+    if(ctype_space($string)) {
+        return false;
+    } 
+    return true;
+}
+
 function  encrypt_decrypt($action, $string)
 {
     $key = 'Ven muerte tan escondida';

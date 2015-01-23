@@ -11,6 +11,12 @@
         </div>
     <?php endif ?>
 
+    <?php if(!empty($thread->validation_errors['title']['format'])): ?>
+        <div>
+            <em>Title</em> must <em>not</em> contain only whitespace.
+        </div>
+    <?php endif ?>
+
     <?php if (!empty($comment->validation_errors['body']['length'])): ?>
         <div><em>Comment</em> must be between
             <?php encode_string($comment->validation['body']['length'][1]) ?> and

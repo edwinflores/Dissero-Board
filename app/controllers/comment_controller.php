@@ -35,7 +35,6 @@ class CommentController extends AppController
             case 'write_end':
                 $comment->thread_id = $thread->id;
                 $comment->user_id = $user->id;
-                $comment->username = $user->username;
                 $comment->body = Param::get('body');
 
                 try {

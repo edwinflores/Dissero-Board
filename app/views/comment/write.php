@@ -13,6 +13,11 @@
         </div>
     <?php endif ?>
 
+    <?php if (!empty($comment->validation_errors['body']['format'])): ?>
+        <div><em>Comment</em> must <em>not</em> be only whitespace
+        </div>
+    <?php endif ?>
+
 </div>
 <?php endif ?>
 

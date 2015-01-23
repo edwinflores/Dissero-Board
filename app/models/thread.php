@@ -9,6 +9,8 @@ class Thread extends AppModel
             'length' => array(
                 'validate_between', self::MIN_TITLE_CHARACTERS, self::MAX_TITLE_CHARACTERS,
             ),
+            'format' => array('check_whitespace'
+            ),
         ),
     );
 

@@ -7,7 +7,9 @@ class Comment extends AppModel
     public $validation = array(
         'body' => array(
             'length' => array(
-            'validate_between', self::MIN_BODY_CHARACTERS, self::MAX_BODY_CHARACTERS,
+                'validate_between', self::MIN_BODY_CHARACTERS, self::MAX_BODY_CHARACTERS,
+            ),
+            'format' => array('check_whitespace'
             ),
         ),
     );
@@ -55,7 +57,6 @@ class Comment extends AppModel
         $params = array(
             'thread_id' => $comment->thread_id,
             'user_id' => $comment->user_id,
-            'username' => $comment->username,
             'body' => $comment->body
         );
 
