@@ -1,11 +1,13 @@
 <?php
-
 class Thread extends AppModel
 {
+    const MIN_TITLE_CHARACTERS = 1;
+    const MAX_TITLE_CHARACTERS = 30;
+
     public $validation = array(
         'title' => array(
             'length' => array(
-                'validate_between', MIN_TITLE_CHARACTERS, MAX_TITLE_CHARACTERS,
+                'validate_between', self::MIN_TITLE_CHARACTERS, self::MAX_TITLE_CHARACTERS,
             ),
         ),
     );

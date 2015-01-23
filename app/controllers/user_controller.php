@@ -2,6 +2,8 @@
 
 class UserController extends AppController
 {
+    const MAX_RANKING_DISPLAY = 10;
+
     /** 
      * Fetch values from registration page
      */
@@ -126,7 +128,7 @@ class UserController extends AppController
     public function ranking()
     {
         $current_page = max(Param::get('page'), SimplePagination::MIN_PAGE_NUM);
-        $pagination = new SimplePagination($current_page, MAX_RANKING_DISPLAY);
+        $pagination = new SimplePagination($current_page, self::MAX_RANKING_DISPLAY);
         $users = User::getTopTen();
         $other_users = array_slice($users, $pagination->start_index + SimplePagination::MIN_PAGE_NUM);
         $pagination->checkLastPage($other_users);

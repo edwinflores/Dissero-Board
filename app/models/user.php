@@ -2,9 +2,13 @@
 
 class User extends AppModel
 {
+    //Ranking related
     const RANKUP_MULTIPLIER = 5;
     const MAX_RANK = 5;
     const MIN_RANK = 1;
+
+    //Top Ten related
+    const TOP_LIMIT = 10;
 
     private $is_login_valid = true;
 
@@ -244,8 +248,7 @@ class User extends AppModel
     public static function getTopTen()
     {
         $db = DB::conn();
-        $limit = TOP_LIMIT;
-        $query = "SELECT DISTINCT comment_count FROM user ORDER BY comment_count DESC LIMIT {$limit}";
+        $query = "SELECT DISTINCT comment_count FROM user ORDER BY comment_count DESC LIMIT " . self::TOP_LIMIT;
         $top_commenters = $db->rows($query);
         $users = array();
         foreach ($top_commenters as $top_row) {
