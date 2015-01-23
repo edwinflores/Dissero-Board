@@ -119,6 +119,7 @@ class UserController extends AppController
         if(Param::get('delete')) {
             Comment::deleteAllByUser($user->id);       
             $user->deleteAccount($user->id);
+            session_destroy();
             redirect_to(url('user/login'));
         }
     }
