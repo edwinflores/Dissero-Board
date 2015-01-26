@@ -14,7 +14,7 @@ class CommentController extends AppController
         $pagination->checkLastPage($other_commments);
         $page_links = createPageLinks(count($comments), $current_page, $pagination->count, 'thread_id=' . $thread->id);
         $comments = array_slice($comments, $pagination->start_index -1, $pagination->count);
-        
+
         $this->set(get_defined_vars());
     }
 
@@ -24,6 +24,7 @@ class CommentController extends AppController
     public function write()
     {    
         $thread = Thread::get(Param::get('thread_id'));
+        $user = User::get($_SESSION['id']);
         $comment = new Comment;
         $page = Param::get('page_next', 'write');
 
@@ -32,11 +33,13 @@ class CommentController extends AppController
                 break;
 
             case 'write_end':
-                $comment->username = Param::get('username');
+                $comment->thread_id = $thread->id;
+                $comment->user_id = $user->id;
                 $comment->body = Param::get('body');
 
                 try {
-                    $comment->write($thread->id, $comment);
+                    $comment->write($comment);
+                    $user->updateRank();
                 } catch (ValidationException $e) {
                     $page = 'write';
                 }
@@ -49,5 +52,42 @@ class CommentController extends AppController
 
         $this->set(get_defined_vars());
         $this->render($page);
+    }
+
+    /**
+     * Deletes a comment
+     */
+    public function delete()
+    {
+        $comment = Comment::get(Param::get('comment_id'));
+
+        $this->set(get_defined_vars());
+
+        if(Param::get('delete')) {
+            $comment->delete($comment);
+            $this->render('delete_end');
+            $user = User::get($comment->user_id);
+            $user->updateRank();
+            $thread = Thread::get($comment->thread_id);
+            $thread->checkComments();
+        }
+    }
+
+    public function edit()
+    {
+        $comment = Comment::get(Param::get('comment_id'));
+        $thread = Thread::get(Param::get('thread_id'));
+
+        $this->set(get_defined_vars());
+
+        if (Param::get('edit')) {
+            $comment->body = Param::get('body');
+            try {
+                $comment->edit();
+                redirect_to(url('thread/index'));
+            } catch (ValidationException $e) {
+                $this->render('edit');
+            }
+        }
     }
 }

@@ -1,4 +1,4 @@
-<h1>Create a thread</h1>
+<h1>(ง •̀_•́)ง Create a thread</h1>
 
 <?php if ($thread->hasError() || $comment->hasError()): ?>
     <div class="alert alert-block">
@@ -11,10 +11,9 @@
         </div>
     <?php endif ?>
 
-    <?php if (!empty($comment->validation_errors['username']['length'])): ?>
-        <div><em>Your name</em> must be between
-        <?php encode_string($comment->validation['username']['length'][1]) ?> and
-        <?php encode_string($comment->validation['username']['length'][2]) ?> characters in length.
+    <?php if(!empty($thread->validation_errors['title']['format'])): ?>
+        <div>
+            <em>Title</em> must <em>not</em> contain only whitespace.
         </div>
     <?php endif ?>
 
@@ -31,8 +30,6 @@
 <form class="well" method="post" action="<?php encode_string(url(''))?>">
     <label>Title</label>
     <input type="text" class="span2" name="title" value="<?php encode_string(Param::get('title'))?>">
-    <label>Your name</label>
-    <input type="text" class="span2" name="username" value="<?php encode_string(Param::get('username'))?>">
     <label>Comment</label>
     <textarea name="body"><?php encode_string(Param::get('body'))?></textarea>
     <br />

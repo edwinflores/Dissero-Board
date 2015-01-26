@@ -1,4 +1,4 @@
-<h2>You have been registered.</h2>
+<h2>(^～^) You have been registered.</h2>
 <p class="alert alert-success">
     The registration was successful.
 </p>

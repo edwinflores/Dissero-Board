@@ -1,11 +1,15 @@
 <?php
-
 class Thread extends AppModel
 {
+    const MIN_TITLE_CHARACTERS = 1;
+    const MAX_TITLE_CHARACTERS = 30;
+
     public $validation = array(
         'title' => array(
             'length' => array(
-                'validate_between', MIN_TITLE_CHARACTERS, MAX_TITLE_CHARACTERS,
+                'validate_between', self::MIN_TITLE_CHARACTERS, self::MAX_TITLE_CHARACTERS,
+            ),
+            'format' => array('check_whitespace'
             ),
         ),
     );
@@ -32,7 +36,7 @@ class Thread extends AppModel
     {
         $threads = array();
         $db = DB::conn();
-        $rows = $db->rows('SELECT * FROM thread');
+        $rows = $db->rows('SELECT * FROM thread ORDER BY created DESC');
 
         foreach ($rows as $row){
             $threads[] = new self($row);
@@ -58,10 +62,24 @@ class Thread extends AppModel
             $db->begin();
             $db->insert('thread', array('title' => $this->title));
             $this->id = $db->lastInsertId();
-            $comment->write($this->id, $comment);
+            $comment->thread_id = $this->id;
+            $comment->write($comment);
             $db->commit();
         } catch (RecordNotFoundException $e) {
             $db->rollback();
         }
     }
+
+    /**
+     * Checks if the thread has any comments in it, deletes it if none
+     */
+    public function checkComments()
+    {
+        $db = DB::conn();
+        $count = count($db->rows('SELECT id FROM comment WHERE thread_id = ?', array($this->id)));
+        if ($count <= 0) {
+            $db->query('DELETE FROM thread WHERE id = ?', array($this->id));
+        }
+    }
+
 }
