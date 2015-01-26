@@ -268,7 +268,7 @@ class User extends AppModel
         $db = DB::conn();
 
         if($rank) {
-            $rows = $db->rows('SELECT * FROM user WHERE rank = ? ORDER BY comment_count DESC', array($rank));
+            $rows = $db->rows('SELECT * FROM user WHERE rank = ? ORDER BY username', array($rank));
 
             $users = array();
             foreach ($rows as $row) {
