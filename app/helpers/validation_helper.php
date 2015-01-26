@@ -41,7 +41,7 @@ function  encrypt_decrypt($action, $string)
 
 function is_logged_in()
 {
-    return isset($_SESSION['username']);
+    return isset($_SESSION['id']);
 }
 
 function is_valid_username($username)

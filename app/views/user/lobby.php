@@ -1,4 +1,4 @@
-<h2><font style="font-size: 30px"> ｃ(｡･ェ･｡)っ Hello <?php encode_string($_SESSION['username'])?>!</font></h2>
+<h2><font style="font-size: 30px"> ｃ(｡･ェ･｡)っ Hello <?php encode_string($user['username'])?>!</font></h2>
 <p class='alert alert-success'>
     You're now logged in to your account.
 </p>

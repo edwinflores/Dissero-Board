@@ -61,10 +61,8 @@ class UserController extends AppController
                 $user->password = Param::get('password');
 
                 try {
-                    $userAccount = $user->verify();
-
-                    $_SESSION['id'] = $userAccount['id'];
-                    $_SESSION['username'] = $userAccount['username'];
+                    $user = $user->verify();
+                    $_SESSION['id'] = $user['id'];
                 } catch (UserNotFoundException $e) {
                     $page = 'login';
                 }
