@@ -71,13 +71,13 @@
     <div class="pagination">
         <font style="font-size: 15px">
         <?php if($pagination->current > 1): ?>
-            &nbsp;<a class='btn btn-primary' href='?page=<?php encode_string($pagination->prev) ?>'>Previous</a>
+            &nbsp;<a class='btn btn-primary' href='?page=<?php encode_string($pagination->prev) ?>&filter=<?php encode_string($filter) ?>'>Previous</a>
         <?php endif ?>
 
         &nbsp; <?php echo $page_links; ?> &nbsp;&nbsp;&nbsp;
 
         <?php if(!$pagination->is_last_page): ?>
-            &nbsp;<a class='btn btn-primary' href='?page=<?php encode_string($pagination->next) ?>'>Next</a>
+            &nbsp;<a class='btn btn-primary' href='?page=<?php encode_string($pagination->next) ?>&filter=<?php encode_string($filter) ?>'>Next</a>
         <?php endif ?>
     </font>
     </div>

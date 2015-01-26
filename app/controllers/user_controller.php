@@ -172,7 +172,7 @@ class UserController extends AppController
         $users = User::filter($filter);
         $other_users = array_slice($users, $pagination->start_index + SimplePagination::MIN_PAGE_NUM);
         $pagination->checkLastPage($other_users);
-        $page_links = createPageLinks(count($users), $current_page, $pagination->count);
+        $page_links = createPageLinks(count($users), $current_page, $pagination->count, 'filter=' . $filter);
         $users = array_slice($users, $pagination->start_index -1, $pagination->count);
         
         $this->set(get_defined_vars());
