@@ -69,4 +69,17 @@ class Thread extends AppModel
             $db->rollback();
         }
     }
+
+    /**
+     * Checks if the thread has any comments in it, deletes it if none
+     */
+    public function checkComments()
+    {
+        $db = DB::conn();
+        $count = count($db->rows('SELECT id FROM comment WHERE thread_id = ?', array($this->id)));
+        if ($count <= 0) {
+            $db->query('DELETE FROM thread WHERE id = ?', array($this->id));
+        }
+    }
+
 }

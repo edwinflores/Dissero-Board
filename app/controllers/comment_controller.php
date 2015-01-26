@@ -60,6 +60,7 @@ class CommentController extends AppController
     public function delete()
     {
         $comment = Comment::get(Param::get('comment_id'));
+
         $this->set(get_defined_vars());
 
         if(Param::get('delete')) {
@@ -67,6 +68,8 @@ class CommentController extends AppController
             $this->render('delete_end');
             $user = User::get($comment->user_id);
             $user->updateRank();
+            $thread = Thread::get($comment->thread_id);
+            $thread->checkComments();
         }
     }
 
