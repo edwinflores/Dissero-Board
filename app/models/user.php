@@ -220,30 +220,36 @@ class User extends AppModel
     }
 
     /**
+     * Fetches users by their comment_count
+     */
+    public static function getUsersByCommentCount($counts, $users = NULL)
+    {
+        if ($users == NULL) {
+            $users = self::getAll();
+        }
+        $users_list = array();
+        for ($i = 0; $i < count($counts); $i++) {
+            foreach ($users as $user) {
+                if ($user->getCommentCount() == $counts[$i]) {
+                    $users_list[] = $user;
+                }
+            }
+        }
+        return $users_list;
+    }
+
+    /**
      * Fetches the top users with the highest comment counts
      */
     public static function getTopTen()
     {
-        $top_comment_count = array();
         $top_users = array();
-        $users = self::getAll();
-
-        foreach ($users as $user) {
-            if (!array_search($user->getCommentCount(), $top_comment_count)) {
-                $top_comment_count[] = $user->getCommentCount();
-            }
-        }
+        $top_comment_count = self::getAllCommentCount();
+        
         rsort($top_comment_count);
         $top_comment_count = array_slice($top_comment_count, self::MIN_TOP_LIMIT - 1, self::MAX_TOP_LIMIT);
 
-        for ($i = 0; $i < count($top_comment_count); $i++) {
-            foreach ($users as $user) {
-                if ($user->getCommentCount() == $top_comment_count[$i]) {
-                    $top_users[] = $user;
-                }
-            }
-        }
-        return $top_users;
+        return self::getUsersByCommentCount($top_comment_count);
     }
 
     /**
@@ -274,9 +280,11 @@ class User extends AppModel
             foreach ($rows as $row) {
                 $users[] = new self($row);
             }
+            $users = self::getSortedUsersByCommentCount($users);
             return $users;
         } else {
-            return self::getAll();
+            $users = self::getSortedUsersByCommentCount(self::getAll());
+            return $users;
         }
     }
 
@@ -296,10 +304,41 @@ class User extends AppModel
         return false;
     }
 
+    /**
+     * Fetches a user's comment count
+     */
     public function getCommentCount()
     {
         $db = DB::conn();
         $comment_count = count($db->rows('SELECT id FROM comment WHERE user_id = ?', array($this->id)));
         return $comment_count;
+    }
+
+    /**
+     * Fetches all users' comment count
+     */
+    public static function getAllCommentCount()
+    {
+        $comment_counts = array();
+        $users = self::getAll();
+
+        foreach ($users as $user) {
+            if (!in_array($user->getCommentCount(), $comment_counts)) {
+                $comment_counts[] = $user->getCommentCount();
+            }
+        }
+
+        return $comment_counts;
+    }
+
+    /**
+     * Returns a list ordered by comment count (desc)
+     */
+    public static function getSortedUsersByCommentCount($users)
+    {
+        $sorted_users = array();
+        $comment_counts = self::getAllCommentCount();
+        rsort($comment_counts);
+        return self::getUsersByCommentCount($comment_counts, $users);
     }
 }

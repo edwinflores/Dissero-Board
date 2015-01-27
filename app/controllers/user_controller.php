@@ -115,7 +115,11 @@ class UserController extends AppController
         $user = User::get($_SESSION['id']);
       
         if(Param::get('delete')) {
-            Comment::deleteAllByUser($user->id);       
+            Comment::deleteAllByUser($user->id);
+            $threads = Thread::getAll();
+            foreach ($threads as $thread) {
+                $thread->checkComments();
+            }
             $user->deleteAccount($user->id);
             session_destroy();
             redirect_to(url('user/login'));

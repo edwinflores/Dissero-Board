@@ -14,7 +14,7 @@
         <a href="<?php encode_string(url('comment/view', array('thread_id' => $row->id))) ?>">
         <?php encode_string($row->title) ?></strong></a></font><br>
         <font style="font-size: 14px">
-        <i>Posted: </i><?php encode_string(time_ago($row->created)) ?></font>
+        <i>Created: </i><?php encode_string(time_ago($row->created)) ?></font>
     </li>
     <br />
     <?php endforeach ?>

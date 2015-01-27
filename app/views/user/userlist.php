@@ -3,7 +3,8 @@
 <form class="form-search" method="GET">
     <?php if ($filter == 'Power'): ?>
     	<select name="filter" class="input-medium">
-    		<option value="" disabled>Filter by</option>
+    		<option value="" disabled>--Rank--</option>
+            <option value="" selected disabled>-Power-</option>
     		<option value="Virtue">Virtue</option>
     		<option value="Dominion">Dominion</option>
     		<option value="Throne">Throne</option>
@@ -12,6 +13,7 @@
     <?php elseif ($filter == 'Virtue'): ?>
     	<select name="filter" class="input-medium">
     		<option value="" disabled>--Rank--</option>
+            <option value="" selected disabled>-Virtue-</option>
     		<option value="Power">Power</option>
     		<option value="Dominion">Dominion</option>
     		<option value="Throne">Throne</option>
@@ -20,6 +22,7 @@
     <?php elseif ($filter == 'Dominion'): ?>
         <select name="filter" class="input-medium">
             <option value="" disabled>--Rank--</option>
+            <option value="" selected disabled>-Dominion-</option>
             <option value="Power">Power</option>
             <option value="Virtue">Virtue</option>
             <option value="Throne">Throne</option>
@@ -28,6 +31,7 @@
     <?php elseif ($filter == 'Throne'): ?>
         <select name="filter" class="input-medium">
             <option value="" disabled>--Rank--</option>
+            <option value="" selected disabled>-Throne-</option>
             <option value="Power">Power</option>
             <option value="Virtue">Virtue</option>
             <option value="Dominion">Dominion</option>
@@ -36,6 +40,7 @@
     <?php elseif ($filter == 'Cherubim'): ?>
         <select name="filter" class="input-medium">
             <option value="" disabled>--Rank--</option>
+            <option value="" selected disabled>-Cherubim-</option>
             <option value="Power">Power</option>
             <option value="Virtue">Virtue</option>
             <option value="Dominion">Dominion</option>

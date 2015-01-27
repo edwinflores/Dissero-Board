@@ -1,24 +1,23 @@
-<h2><font style="font-size: 45px"><?php encode_string($thread->title) ?></font>
+<h2><font style="font-size: 25px"><?php encode_string($thread->title) ?></font>
 <div align="left"><a class="btn btn-danger" href="<?php encode_string(url('thread/index')) ?>">Back to Index</a></div>
 </h2>
 <hr width="90%" align="center" size="8" noshade>
 <?php foreach ($comments as $key => $value): ?>
     <div class="comment">
 
-        <div class="meta">
-            <font style="font-size: 18px"><?php encode_string($key + 1) ?>: 
-            <font style="font-size: 20px"><u><?php encode_string(User::get($value->user_id)->username) ?></u><br /> 
-            <font style="font-size: 18px"><strong>Rank : </strong><i><?php encode_string(User::get($value->user_id)->getRank()) ?></i><br />
-            <font style="font-size: 15px"><strong>Posted : </strong><?php encode_string(time_ago($value->created)) ?>
-            </font>
-        </div>
-
-        <div>
-            <font style="font-size: 18px">
+        <div class>
+            <font style="font-size: 16px">
             <?php echo "> " . readable_text($value->body); ?>
             </font>
         </div>
-        <br>
+
+        <div class="meta">
+            <font style="font-size: 15px">Posted : <?php encode_string(time_ago($value->created)) ?> 
+                by <u><?php encode_string(User::get($value->user_id)->username) ?></u>
+                (Rank : <i><?php encode_string(User::get($value->user_id)->getRank()) ?></i>")
+            </font>
+        </div>
+
         <?php if($_SESSION['id'] === $value->user_id): ?>
             <a class="btn btn-info btn-sm" href="<?php encode_string(url('comment/edit', array('thread_id' => $thread->id, 'comment_id' => $value->id))) ?>">Edit</a>
             <a class="btn btn-danger btn-sm" href="<?php encode_string(url('comment/delete', array('thread_id' => $thread->id, 'comment_id' => $value->id))) ?>">Delete</a>
